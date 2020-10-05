@@ -5,7 +5,7 @@ let storeLogoApp = new Vue({
     },
     methods: {
         //加载店铺信息Id 店铺名 和头像
-        loadStoreInfo: function () {
+        loadStoreInfo() {
             let pathname = location.pathname;
             let split = pathname.split('/');
             // console.log(split)
@@ -13,16 +13,16 @@ let storeLogoApp = new Vue({
             // console.log(merchandId)
             let _this = this;
             axios.get('/api-store/' + merchandId)
-                .then(function (response) {
-                    if (response.data.state === 2000) {
-                        _this.store = response.data.data
+                .then(r => {
+                    if (r.data.state === 2000) {
+                        _this.store = r.data.data
                     }
-                }).catch(function (error) {
-
-            })
+                })
+                .catch(e => {
+                })
         }
     },
-    created: function () {
+    created() {
         this.loadStoreInfo()
     }
 });
@@ -30,12 +30,12 @@ let storeNavApp = new Vue({
     el: '#storeNavApp',
     data: {
         store: {},
-        category3:{},
-        headerHotGoods:{}
+        category3: {},
+        headerHotGoods: {}
     },
     methods: {
         //加载店铺信息Id 店铺名 和头像
-        loadStoreInfo: function () {
+        loadStoreInfo () {
             let _this = this;
             let pathname = location.pathname;
             let split = pathname.split('/');
@@ -43,38 +43,39 @@ let storeNavApp = new Vue({
             let merchandId = split[2];
             // console.log(merchandId)
             axios.get('/api-store/' + merchandId)
-                .then(function (response) {
-                    if (response.data.state === 2000) {
-                        _this.store = response.data.data
+                .then(r=> {
+                    if (r.data.state === 2000) {
+                        _this.store = r.data.data
                         _this.$options.methods.loadStoreCategory3(_this)
                         _this.$options.methods.loadStoreHotGoods(_this)
                     }
-                }).catch(function (error) {
+                })
+                .catch(e=>{
 
             })
         },
         //加载商家商品分类
-        loadStoreCategory3: function (_this) {
+        loadStoreCategory3(_this) {
             axios.get('/home/category3/' + _this.store.category2Id)
-                .then(function (response) {
-                    _this.category3=response.data.data
+                .then(r=>{
+                    _this.category3 = r.data.data
 
                 })
-                .catch(function (error) {
+                .catch(e=> {
                 })
         },
         //加载商家热卖
-        loadStoreHotGoods:function (_this) {
-            axios.get('/api-good/'+_this.store.id+'/hotGoods')
-                .then(function (response) {
-                    _this.headerHotGoods=response.data.data
+        loadStoreHotGoods (_this) {
+            axios.get('/api-good/' + _this.store.id + '/hotGoods')
+                .then(r=> {
+                    _this.headerHotGoods = r.data.data
 
                 })
-                .catch(function (error) {
+                .catch(e=> {
                 })
         }
     },
-    created: function () {
+    created () {
         this.loadStoreInfo()
     }
 });

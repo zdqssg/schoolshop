@@ -5,7 +5,7 @@ let titleApp = new Vue({
     },
     methods: {
         //加载店铺信息Id 店铺名 和头像
-        loadStoreInfo: function () {
+        loadStoreInfo () {
             let pathname = location.pathname;
             let split = pathname.split('/');
             // console.log(split)
@@ -13,16 +13,16 @@ let titleApp = new Vue({
             // console.log(merchandId)
             let _this = this;
             axios.get('/api-store/' + merchandId)
-                .then(function (response) {
-                    if (response.data.state === 2000) {
-                        _this.store = response.data.data
+                .then(r=>{
+                    if (r.data.state === 2000) {
+                        _this.store = r.data.data
                     }
-                }).catch(function (error) {
+                }).catch(e=>{
 
             })
         }
     },
-    created: function () {
+    created() {
         this.loadStoreInfo()
     }
 })
@@ -35,7 +35,7 @@ let slideApp = new Vue({
     },
     methods: {
         //加载店铺轮播图
-        loadStoreSlide: function () {
+        loadStoreSlide () {
             let _this = this;
             let pathname = location.pathname;
             let split = pathname.split('/');
@@ -43,16 +43,16 @@ let slideApp = new Vue({
             let merchantId = split[2];
             _this.merchantId = merchantId
             axios.get('/api-store/' + merchantId + '/slide')
-                .then(function (response) {
-                    if (response.data.state === 2000) {
-                        _this.slide = response.data.data
+                .then(r=> {
+                    if (r.data.state === 2000) {
+                        _this.slide = r.data.data
                     }
-                }).catch(function (error) {
+                }).catch(e=> {
 
             })
         },
     },
-    created: function () {
+    created () {
         this.loadStoreSlide()
     }
 });
@@ -63,7 +63,7 @@ let newGoodsApp = new Vue({
         newGoods: []
     },
     methods: {
-        loadStoreNewGoods: function () {
+        loadStoreNewGoods () {
             let _this = this;
             let pathname = location.pathname;
             let split = pathname.split('/');
@@ -71,20 +71,20 @@ let newGoodsApp = new Vue({
             let merchantId = split[2];
             _this.merchantId = merchantId
             axios.get('/api-good/' + merchantId + '/newGoods')
-                .then(function (response) {
+                .then(r=> {
                     if (response.data.state === 2000) {
                         _this.newGoods = response.data.data
                     }
                 })
-                .catch(function (error) {
+                .catch(e=>{
 
                 })
         },
-        clickGood: function (id) {
+        clickGood (id) {
             location.href = '/store/' + this.merchantId + '/good/' + id
         }
     },
-    created: function () {
+    created () {
         this.loadStoreNewGoods()
     }
 })
@@ -95,28 +95,28 @@ let hotGoodsApp = new Vue({
         hotGoods: []
     },
     methods: {
-        loadStoreHotGoods: function () {
+        loadStoreHotGoods () {
             let _this = this;
             let pathname = location.pathname;
             let split = pathname.split('/');
             let merchantId = split[2];
             _this.merchantId = merchantId
             axios.get('/api-good/' + merchantId + '/hotGoods')
-                .then(function (response) {
-                    if (response.data.state === 2000) {
-                        _this.hotGoods = response.data.data
+                .then(r=> {
+                    if (r.data.state === 2000) {
+                        _this.hotGoods = r.data.data
                     }
                 })
-                .catch(function (error) {
+                .catch(e=> {
 
                 })
 
         },
-        clickGood: function (id) {
+        clickGood (id) {
             location.href = '/store/' + this.merchantId + '/good/' + id
         }
     },
-    created: function () {
+    created () {
         this.loadStoreHotGoods()
     }
 })

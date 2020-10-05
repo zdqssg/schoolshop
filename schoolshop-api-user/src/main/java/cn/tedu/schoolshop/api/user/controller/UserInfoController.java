@@ -45,30 +45,42 @@ public class UserInfoController {
         return R.ok(userService.getById(userInfo.getId()).getBgImg());
     }
 
-
-
-    @PostMapping("/changeGender")
-    public R changeGender(@AuthenticationPrincipal LoginUserInfo userInfo,
-                           Integer gender) {
-        User user = new User().setId(userInfo.getId()).setGender(gender);
-
-        if (userService.updateById(user)) {
+    @PutMapping("/headPhoto")
+    public R updateHeadPhoto(@AuthenticationPrincipal LoginUserInfo userInfo,
+                             @RequestBody User user) {
+        log.debug("用户头像{}", user);
+        user.setId(userInfo.getId());
+        boolean update = userService.updateById(user);
+        if (update) {
             return R.ok();
         } else {
-            return R.failure(R.State.ERR_UNKNOWN,new UpdateExteption("修改性别失败"));
+            return R.failure(R.State.ERR_UPDATE, new UpdateExteption());
         }
     }
-    @PostMapping("/updateBirth")
-    public R updateBirth(@AuthenticationPrincipal LoginUserInfo userInfo,
-                          String birth) throws ParseException {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        Date parse = dateFormat.parse(birth);
-        User user = new User().setId(userInfo.getId()).setBirth(birth);
+
+
+    @PutMapping("/changeGender")
+    public R changeGender(@AuthenticationPrincipal LoginUserInfo userInfo,
+                          @RequestBody User user) {
+        user.setId(userInfo.getId());
 
         if (userService.updateById(user)) {
             return R.ok();
         } else {
-            return R.failure(R.State.ERR_UNKNOWN,new UpdateExteption("修改性别失败"));
+            return R.failure(R.State.ERR_UNKNOWN, new UpdateExteption("修改性别失败"));
+        }
+    }
+
+    @PutMapping("/updateBirth")
+    public R updateBirth(@AuthenticationPrincipal LoginUserInfo userInfo,
+                         @RequestBody User user) throws ParseException {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date parse = dateFormat.parse(birth);
+        user.setId(userInfo.getId());
+        if (userService.updateById(user)) {
+            return R.ok();
+        } else {
+            return R.failure(R.State.ERR_UNKNOWN, new UpdateExteption("修改性别失败"));
         }
     }
 

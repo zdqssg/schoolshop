@@ -5,7 +5,7 @@ let titleApp = new Vue({
     },
     methods: {
         //加载店铺信息Id 店铺名 和头像
-        loadStoreInfo: function () {
+        loadStoreInfo() {
             let pathname = location.pathname;
             let split = pathname.split('/');
             // console.log(split)
@@ -13,16 +13,16 @@ let titleApp = new Vue({
             // console.log(merchandId)
             let _this = this;
             axios.get('/api-store/' + merchandId)
-                .then(function (response) {
-                    if (response.data.state === 2000) {
-                        _this.store = response.data.data
+                .then(r => {
+                    if (r.data.state === 2000) {
+                        _this.store = r.data.data
                     }
-                }).catch(function (error) {
+                }).catch(e => {
 
             })
         }
     },
-    created: function () {
+    created() {
         this.loadStoreInfo()
     }
 })
@@ -43,7 +43,7 @@ let resultRoomApp = new Vue({
         room: []
     },
     methods: {
-        loadStoreGoods: function () {
+        loadStoreGoods() {
             let _this = this;
             let pathname = location.pathname;
             let split = pathname.split('/');
@@ -51,23 +51,24 @@ let resultRoomApp = new Vue({
             _this.filter.category = decodeURI(split[4]);
             _this.$options.methods.load(_this);
         },
-        load: function (_this) {
+        load(_this) {
             if (_this == undefined) {
                 _this = this
                 _this.filter.pageNum = 1
             }
             axios.get('/api-search', {
                 params: _this.filter
-            }).then(function (response) {
-                if (response.data.state === 2000) {
-                    _this.room = response.data.data
-                }
-            }).catch(function (error) {
+            })
+                .then(r => {
+                    if (r.data.state === 2000) {
+                        _this.room = r.data.data
+                    }
+                }).catch(e => {
 
             })
         },
         //分页
-        loadPaging: function (pageNum) {
+        loadPaging(pageNum) {
             let _this = this;
             if (pageNum == "" || isNaN(pageNum) || pageNum < 1) {
                 pageNum = 1;
@@ -76,11 +77,11 @@ let resultRoomApp = new Vue({
             _this.$options.methods.load(_this);
             location.href = '#resultRoomApp'
         },
-        clickGood: function (id) {
+        clickGood (id) {
             location.href = '/store/' + this.filter.merchantId + '/good/' + id
         }
     },
-    created: function () {
+    created () {
         this.loadStoreGoods()
     }
 })
@@ -92,28 +93,28 @@ let hotGoodsApp = new Vue({
         hotGoods: []
     },
     methods: {
-        loadStoreHotGoods: function () {
+        loadStoreHotGoods () {
             let _this = this;
             let pathname = location.pathname;
             let split = pathname.split('/');
             let merchantId = split[2];
             _this.merchantId = merchantId
             axios.get('/api-good/' + merchantId + '/hotGoods')
-                .then(function (response) {
-                    if (response.data.state === 2000) {
-                        _this.hotGoods = response.data.data
+                .then(r=> {
+                    if (r.data.state === 2000) {
+                        _this.hotGoods = r.data.data
                     }
                 })
-                .catch(function (error) {
+                .catch(e=>{
 
                 })
 
         },
-        clickGood: function (id) {
+        clickGood(id) {
             location.href = '/store/' + this.merchantId + '/good/' + id
         }
     },
-    created: function () {
+    created () {
         this.loadStoreHotGoods()
     }
 })

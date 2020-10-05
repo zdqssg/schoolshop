@@ -40,10 +40,9 @@
                 <div class="user-infoPic">
 
                     <div class="filePic">
-                        <form id="user-header-photo">
-                            <input type="file" name="file" class="inputPic"
-                                   @change="changeHeaderPhoto" allowexts="gif,jpeg,jpg,png,bmp" accept="image/*">
-                        </form>
+
+                            <input type="file" name="file" class="inputPic" id="user-header-photo"
+                                   @change="getFile" allowexts="gif,jpeg,jpg,png,bmp" accept="image/*">
                         <img class="am-circle am-img-thumbnail" :src="info.headPhoto" alt=""/>
                     </div>
 
@@ -154,10 +153,14 @@
 
 <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
 <script th:src="@{/js/schoolshop/bootstrap.min.js}"></script>
-<script th:src="@{/js/vue.js}"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+<script src="/js/commons/getTime.js"></script>
 <!--用户页面必要js-->
-<script th:src="@{/js/amazeui.min.js}"></script>
+<script src="/js/amazeui.min.js"></script>
 <script src="/js/person/main.js"></script>
+
+
 <script src="/js/person/information.js"></script>
 
 </body>

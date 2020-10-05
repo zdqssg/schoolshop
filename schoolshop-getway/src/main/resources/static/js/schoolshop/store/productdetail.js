@@ -5,23 +5,23 @@ let titleApp = new Vue({
     },
     methods: {
         //加载店铺信息Id 店铺名 和头像
-        loadStoreInfo: function () {
+        loadStoreInfo () {
             let pathname = location.pathname;
             let split = pathname.split('/');
             // console.log(split)
             let goodId = split[4];
             let _this = this;
             axios.get('/api-good/info/' + goodId)
-                .then(function (response) {
-                    if (response.data.state === 2000) {
-                        _this.good = response.data.data
+                .then(r => {
+                    if (r.data.state === 2000) {
+                        _this.good = r.data.data
                     }
-                }).catch(function (error) {
-
-            })
+                })
+                .catch(e => {
+                })
         }
     },
-    created: function () {
+    created() {
         this.loadStoreInfo()
     }
 })
@@ -48,7 +48,7 @@ let goodDetailApp = new Vue({
 
     },
     methods: {
-        loadGoodDetail: function (pageNum) {
+        loadGoodDetail (pageNum) {
             let _this = this;
             if (pageNum == "" || isNaN(pageNum) || pageNum < 1) {
                 pageNum = 1;
@@ -80,10 +80,10 @@ let goodDetailApp = new Vue({
                 })
         },
         //加载用户
-        loadUserInfo: function (_this) {
+        loadUserInfo(_this) {
             axios.get('/api-user/info/name')
-                .then(function (response) {
-                    if (response.data.state === 2000) {
+                .then(r => {
+                    if (r.data.state === 2000) {
                         _this.user = true
                         _this.$options.methods.loadUserHasLike(_this);
                     } else {
@@ -91,17 +91,17 @@ let goodDetailApp = new Vue({
                     }
 
                 })
-                .catch(function (e) {
+                .catch(e => {
                     _this.user = false
                 })
         },
-        loadUserHasLike: function (_this) {
+        loadUserHasLike(_this) {
             console.log(_this)
             let goodId = _this.data.good.id;
             axios.get('/api-user/likeGoods/' + goodId)
-                .then(function (response) {
-                    if (response.data.state === 2000) {
-                        if (response.data.data.state == 1) {
+                .then(r => {
+                    if (r.data.state === 2000) {
+                        if (r.data.data.state === 1) {
                             _this.userHasLikeHint.hasLike = true
                         } else {
                             _this.userHasLikeHint.hasLike = false
@@ -111,45 +111,47 @@ let goodDetailApp = new Vue({
                         _this.userHasLikeHint.hasLike = false
                     }
                 })
-                .catch(function (error) {
+                .catch(e => {
                     _this.userHasLikeHint.hasLike = false
                 })
         },
-        changeLike: function (goodId) {
+        changeLike (goodId) {
             let _this = this;
             if (!_this.user) {
                 _this.$options.methods.hint(_this.userHasLikeHint, '<span>请</span><a href="/person/none/login" class="alert-link">登录</a>!!!', 'danger')
                 return;
             }
-            axios.post('/api-user/likeGoods/' + goodId).then(function (response) {
-                // console.log(response)
-                if (response.data.state === 2000) {
-                    _this.userHasLikeHint.hasLike = !_this.userHasLikeHint.hasLike
-                } else {
-                    _this.$options.methods.hint(_this.userHasLikeHint, response.data.message, 'danger')
-                }
-            }).catch(function (error) {
+            axios.post('/api-user/likeGoods/' + goodId)
+                .then(r => {
+                    // console.log(response)
+                    if (r.data.state === 2000) {
+                        _this.userHasLikeHint.hasLike = !_this.userHasLikeHint.hasLike
+                    } else {
+                        _this.$options.methods.hint(_this.userHasLikeHint, r.data.message, 'danger')
+                    }
+                }).catch(e => {
                 _this.$options.methods.hint(_this.userHasLikeHint, '异常，请稍后重试', 'danger')
             })
         },
         /**
          * 添加进购物车
          */
-        addCart: function (goodId) {
+        addCart(goodId) {
             console.log("尝试添加进购物车", goodId)
             let _this = this;
             if (!_this.user) {
                 _this.$options.methods.hint(_this.addCartHint, '<span>请</span><a href="/person/none/login" class="alert-link">登录</a>!!!', 'danger')
                 return;
             }
-            axios.post('/api-user/cart/' + goodId).then(function (response) {
-                // console.log(response)
-                if (response.data.state === 2000) {
-                    _this.$options.methods.hint(_this.addCartHint, '添加成功', 'success')
-                } else {
-                    _this.$options.methods.hint(_this.addCartHint, response.data.message+'<a href="/person/cart">[购物车]</a>', 'danger')
-                }
-            }).catch(function (error) {
+            axios.post('/api-user/cart/' + goodId)
+                .then(r => {
+                    // console.log(response)
+                    if (r.data.state === 2000) {
+                        _this.$options.methods.hint(_this.addCartHint, '添加成功', 'success')
+                    } else {
+                        _this.$options.methods.hint(_this.addCartHint, r.data.message + '<a href="/person/cart">[购物车]</a>', 'danger')
+                    }
+                }).catch(e => {
                 // console.log(error)
                 _this.$options.methods.hint(_this.addCartHint, '异常，请稍后重试', 'danger')
             })
@@ -157,7 +159,7 @@ let goodDetailApp = new Vue({
         /**
          *添加购物车的警告
          */
-        hint: function (_this, message, color) {
+        hint(_this, message, color) {
             _this.state = true
             _this.message = message
             _this.color = color
@@ -170,27 +172,27 @@ let goodDetailApp = new Vue({
          * 评价点赞
          * @param id
          */
-        giveALike: function (id) {
+        giveALike(id) {
             let _this = this;
             axios.put('/api-goodComment/addLike/' + id)
-                .then(function (response) {
+                .then(r => {
                     // console.log(_this.data.good.comment)
-                    if (response.data.state === 2000) {
+                    if (r.data.state === 2000) {
                         // console.log(_this.data.good.comment)
                         let comments = _this.data.good.comment;
                         for (let i = 0; i < comments.length; i++) {
                             // console.log(comments[i].id)
                             if (comments[i].id === id) {
-                                comments[i].approval = response.data.data
+                                comments[i].approval = r.data.data
                             }
                         }
                     }
-                }).catch(function (e) {
+                }).catch(e => {
 
             })
         }
     },
-    created: function () {
+    created() {
         this.loadGoodDetail()
     }
 });
@@ -201,28 +203,28 @@ let hotGoodsApp = new Vue({
         hotGoods: []
     },
     methods: {
-        loadStoreHotGoods: function () {
+        loadStoreHotGoods() {
             let _this = this;
             let pathname = location.pathname;
             let split = pathname.split('/');
             let merchantId = split[2];
             _this.merchantId = merchantId
             axios.get('/api-good/' + merchantId + '/hotGoods')
-                .then(function (response) {
-                    if (response.data.state === 2000) {
-                        _this.hotGoods = response.data.data
+                .then(r => {
+                    if (r.data.state === 2000) {
+                        _this.hotGoods = r.data.data
                     }
                 })
-                .catch(function (error) {
+                .catch(e => {
 
                 })
 
         },
-        clickGood: function (id) {
+        clickGood(id) {
             location.href = '/store/' + this.merchantId + '/good/' + id
         }
     },
-    created: function () {
+    created() {
         this.loadStoreHotGoods()
     }
 })

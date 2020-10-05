@@ -19,11 +19,4 @@ public class SchoolshopApiUserApplication {
         SpringApplication.run(SchoolshopApiUserApplication.class, args);
     }
 
-    @Bean
-    public MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory multipartConfigFactory = new MultipartConfigFactory();
-        multipartConfigFactory.setMaxFileSize(DataSize.ofMegabytes(500));
-        multipartConfigFactory.setMaxRequestSize(DataSize.ofMegabytes(500));
-        return multipartConfigFactory.createMultipartConfig();
-    }
 }

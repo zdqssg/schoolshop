@@ -20,11 +20,11 @@ let receiveAddressApp = new Vue({
 
     },
     methods: {
-        loadUserReceiveAddress: function () {
+        loadUserReceiveAddress () {
             let _this = this;
             axios.get('/api-user/receiveAddress')
-                .then(function (response) {
-                    let list = response.data.data;
+                .then(r=> {
+                    let list = r.data.data;
                     for (let i = 0; i < list.length; i++) {
                         if (list[i].state == 2) {
                             _this.defaultAddr.splice(0, 1, list[i]);
@@ -33,23 +33,23 @@ let receiveAddressApp = new Vue({
                     }
                     _this.userReceiveAddress = list;
                 })
-                .catch(function (error) {
+                .catch(e=> {
 
                 })
         },
-        loadProvince: function () {
+        loadProvince () {
             let _this = this;
             axios.get("/home/provinceList")
-                .then(function (response) {
-                    _this.province = response.data.data;
+                .then(r=> {
+                    _this.province = r.data.data;
                 })
 
         },
-        loadCity: function () {
+        loadCity() {
             let _this = this;
             axios.get("/home/cityList")
-                .then(function (response) {
-                    let cityList = response.data.data;
+                .then(r=> {
+                    let cityList = r.data.data;
                     let city = []
                     for (let i = 0; i < cityList.length; i++) {
                         if (cityList[i].provinceCode == _this.addReceiveAddress.provinceCode) {
@@ -60,11 +60,11 @@ let receiveAddressApp = new Vue({
 
                 })
         },
-        loadArea: function () {
+        loadArea () {
             let _this = this;
             axios.get("/home/areaList")
-                .then(function (response) {
-                    let areaList = response.data.data;
+                .then(r=> {
+                    let areaList = r.data.data;
                     let area = []
                     for (let i = 0; i < areaList.length; i++) {
                         if (areaList[i].cityCode == _this.addReceiveAddress.cityCode) {
@@ -75,11 +75,11 @@ let receiveAddressApp = new Vue({
 
                 })
         },
-        loadStreet: function () {
+        loadStreet () {
             let _this = this;
             axios.get("/home/streetList")
-                .then(function (response) {
-                    let streetList = response.data.data;
+                .then(r=> {
+                    let streetList = r.data.data;
                     let street = []
                     for (let i = 0; i < streetList.length; i++) {
                         if (streetList[i].areaCode == _this.addReceiveAddress.areaCode) {
@@ -90,28 +90,28 @@ let receiveAddressApp = new Vue({
 
                 })
         },
-        postReceiveAddress: function () {
+        postReceiveAddress () {
             let _this = this;
             // console.log(_this.addReceiveAddress)
             axios.post("/api-user/receiveAddress", _this.addReceiveAddress)
-                .then(function (response) {
-                    if (response.data.state === 2000) {
+                .then(r=> {
+                    if (r.data.state === 2000) {
                         // alert(121)
                         history.go(0)
                     }
                 })
-                .catch(function (error) {
+                .catch(e=> {
 
                 })
 
         },
-        deleteAddress: function (id, index) {
+        deleteAddress (id, index) {
             let _this = this;
             console.log('删除' + id)
             axios.delete('/api-user/receiveAddress/' + id)
-                .then(function (response) {
-                    console.log('返回结果' + response)
-                    if (response.data.state == 2000) {
+                .then(r=> {
+                    console.log('返回结果' + r)
+                    if (r.data.state == 2000) {
                         if (index == undefined) {
                             _this.defaultAddr = [];
                         } else {
@@ -120,20 +120,20 @@ let receiveAddressApp = new Vue({
                         }
                     }
                 })
-                .catch(function (error) {
+                .catch(e=> {
 
                 })
 
         },
-        setDefault: function (id, index) {
+        setDefault (id, index) {
             let _this = this;
             let data = {
                 id: id,
                 state: 2
             }
             axios.put("/api-user/receiveAddress/update", data)
-                .then(function (response) {
-                    if (response.data.state == 2000) {
+                .then(r=>{
+                    if (r.data.state == 2000) {
                         // history.go(0)
                         let defaultAddrElement = _this.defaultAddr[0];
                         let userReceiveAddress = _this.userReceiveAddress[index];
@@ -144,11 +144,11 @@ let receiveAddressApp = new Vue({
                         _this.userReceiveAddress.splice(index, 1, defaultAddrElement)
                     }
                 })
-                .catch(function (error) {
+                .catch(e=> {
 
                 })
         },
-        changeAddress: function (id, index) {
+        changeAddress(id, index) {
 
             let _this = this;
             if (id == undefined || index == undefined) {
@@ -160,7 +160,7 @@ let receiveAddressApp = new Vue({
 
         }
     },
-    created: function () {
+    created () {
         this.loadUserReceiveAddress()
         this.loadProvince()
     }

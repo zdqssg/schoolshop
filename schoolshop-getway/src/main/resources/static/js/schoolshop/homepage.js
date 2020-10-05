@@ -5,14 +5,14 @@ let slideList = new Vue({
         List: []
     },
     methods: {
-        loadSlideList: function () {
+        loadSlideList() {
             axios.get('/home/slideList')
                 .then(r => {
                     this.List = r.data.data;
                 })
         }
     },
-    created: function () {
+    created() {
         this.loadSlideList()
     }
 });
@@ -23,17 +23,17 @@ let recommendGoods = new Vue({
         List: []
     },
     methods: {
-        loadRecommendGoods: function () {
+        loadRecommendGoods () {
             axios.get('/home/recommendList')
                 .then(r => {
                     this.List = r.data.data;
                 })
         },
-        clickGood: function (merchantId, id) {
+        clickGood (merchantId, id) {
             location.href = '/store/' + merchantId + '/good/' + id
         }
     },
-    created: function () {
+    created () {
         this.loadRecommendGoods()
     }
 });
@@ -44,18 +44,18 @@ let hotGoodsApp = new Vue({
         List: []
     },
     methods: {
-        loadHotGood: function () {
+        loadHotGood() {
             axios.get('/home/hotProducts')
                 .then(r => {
                     this.List = r.data.data
                 })
         }
         ,
-        clickGood: function (merchantId, id) {
+        clickGood (merchantId, id) {
             location.href = '/store/' + merchantId + '/good/' + id
         }
     },
-    created: function () {
+    created() {
         this.loadHotGood();
     }
 })

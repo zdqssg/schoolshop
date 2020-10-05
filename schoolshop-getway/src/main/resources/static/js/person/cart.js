@@ -11,11 +11,11 @@ let userCartApp = new Vue({
         /**
          * 加载购物车
          */
-        loadCart: function () {
+        loadCart () {
             let _this = this;
             axios.get('/api-user/cart')
-                .then(function (response) {
-                    let cartAll = response.data.data;
+                .then(r=> {
+                    let cartAll = r.data.data;
                     let cart = []
                     let soldCart = []
                     for (let i = 0; i < cartAll.length; i++) {
@@ -32,7 +32,7 @@ let userCartApp = new Vue({
                     // console.log(_this.cart)
                     _this.soldCart = soldCart
                 })
-                .catch(function (error) {
+                .catch(e=> {
 
                 })
         },
@@ -41,12 +41,12 @@ let userCartApp = new Vue({
          * @param id
          * @param index
          */
-        deleteCart: function (id, index) {
+        deleteCart (id, index) {
             if (confirm("你确定要删除吗？")) {
                 let _this = this;
                 axios.delete('/api-user/cart/' + id)
-                    .then(function (response) {
-                        if (response.data.state == 2000) {
+                    .then(r=> {
+                        if (r.data.state == 2000) {
                             for (let i = 0; i < _this.cart.length; i++) {
                                 if (_this.cart[i].id == id) {
                                     _this.cart.splice(index, 1)
@@ -59,11 +59,11 @@ let userCartApp = new Vue({
                             }
 
                         } else {
-                            alert('删除失败:' + response.data.message)
+                            alert('删除失败:' + r.data.message)
                         }
                     })
-                    .catch(function (error) {
-                        alert('异常:' + error)
+                    .catch(e=>{
+                        alert('异常:' + e)
                     })
             }
 
@@ -73,7 +73,7 @@ let userCartApp = new Vue({
          * @param id
          * @param index
          */
-        checkedCart: function (id, index) {
+        checkedCart (id, index) {
             let _this = this;
             // console.log(index)
             // console.log(_this.cart[index].checked)
@@ -87,7 +87,7 @@ let userCartApp = new Vue({
         /**
          * 全选
          */
-        checkedAll: function () {
+        checkedAll () {
             let _this = this;
             _this.isCheckedAll = !_this.isCheckedAll
             let cart = _this.cart;
@@ -101,7 +101,7 @@ let userCartApp = new Vue({
          * @param n
          * @param index
          */
-        changNumber: function (n, index) {
+        changNumber (n, index) {
             let _this = this;
             let cartElement = _this.cart[index];
             let cartNumber = cartElement.number;
@@ -120,14 +120,14 @@ let userCartApp = new Vue({
                 number: number
             }
             axios.put("/api-user/cart", params)
-                .then(function (response) {
-                    if (response.data.state === 2000) {
+                .then(r=> {
+                    if (r.data.state === 2000) {
                         cartElement.number = number
                         //计算总价
                         _this.$options.methods.calculateSum(_this)
                     }
                 })
-                .catch(function (error) {
+                .catch(e=> {
 
                 })
         },
@@ -135,7 +135,7 @@ let userCartApp = new Vue({
          * 计算总价
          * @param _this
          */
-        calculateSum: function (_this) {
+        calculateSum (_this) {
             let sum = 0
             let cart = _this.cart;
             let count=0;
@@ -156,7 +156,7 @@ let userCartApp = new Vue({
             }
             _this.sum = sum
         },
-        gotoPay: function () {
+        gotoPay () {
             let _this = this;
             let cart = _this.cart;
             let idArr = []
@@ -170,20 +170,20 @@ let userCartApp = new Vue({
                 return;
             }
             axios.post('/api-user/order/addOrder/'+idArr)
-                .then(function (response) {
-                    if (response.data.state==2000){
-                       let oderId = parseInt(response.data.data);
+                .then(r=> {
+                    if (r.data.state==2000){
+                       let oderId = parseInt(r.data.data);
                         location.href = '/person/checkout/'+oderId
                     }else {
                         alert("系统异常")
                     }
                 })
-                .catch(function () {
-                   alert("系统异常")
+                .catch(e=>{
+                   alert("系统异常"+e)
                 })
         }
     },
-    created: function () {
+    created () {
         this.loadCart()
     }
 })

@@ -14,37 +14,36 @@ let navRightApp = new Vue({
     },
     methods: {
         //加载用户名
-        loadInfo: function () {
+        loadInfo () {
             let _this = this;
             axios.get('/api-user/info/name')
-                .then(function (response) {
-                    if (response.data.state === 2000) {
+                .then(r=> {
+                    if (r.data.state === 2000) {
                         _this.user = true
-                        _this.nickname = response.data.data;
+                        _this.nickname = r.data.data;
                         _this.$options.methods.loadUserCart(_this);
                     }
                 })
-                .catch(function (e) {
+                .catch(e=>{
                     _this.user = false
                     _this.nickname = '';
                     _this.carts = [];
                 })
         },
-        loadUserCart: function (_this) {
+        loadUserCart (_this) {
             axios.get('/api-user/cart/headerCart')
-                .then(function (response) {
-                    if (response.data.state === 2000) {
-                        _this.carts = response.data.data;
+                .then(r => {
+                    if (r.data.state === 2000) {
+                        _this.carts = r.data.data;
                     }
                 })
-                .catch(function (error) {
-
+                .catch(e => {
                 })
         },
         /**
          * 当input的值改变的事件  延迟400毫秒发送请求
          */
-        sendMatching: function (_this) {
+        sendMatching (_this) {
             if (_this === undefined) {
                 _this = this;
             }
@@ -74,14 +73,14 @@ let navRightApp = new Vue({
         /**
          *
          */
-        toShopWord: function () {
+        toShopWord () {
             location.href = '/home/searchMsg/' + this.search.msg
         },
-        toShopWordByMatching(msg){
+        toShopWordByMatching(msg) {
             location.href = '/home/searchMsg/' + msg;
         }
     },
-    created: function () {
+    created () {
         this.loadInfo()
     }
 });

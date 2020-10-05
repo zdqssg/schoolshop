@@ -4,25 +4,25 @@ let commentListApp = new Vue({
         data: []
     },
     methods: {
-        load: function (pageNum) {
+        load (pageNum) {
             let _this = this;
             if (pageNum == "" || isNaN(pageNum) || pageNum < 1) {
                 pageNum = 1;
             }
             axios.get("/api-user/userGoodsComment/" + pageNum)
-                .then(function (response) {
-                    _this.data = response.data.data
+                .then(r=> {
+                    _this.data = r.data.data
                 })
-                .catch(function (error) {
+                .catch(e=> {
 
                 })
 
         },
-        clickGood:function (merchantId,id) {
+        clickGood (merchantId,id) {
             location.href='/store/'+merchantId+'/good/'+id
         }
     },
-    created: function () {
+    created () {
         this.load()
     }
 })

@@ -10,7 +10,7 @@ new Vue({
     },
     methods: {
 
-        init: function () {
+        init() {
             //头部商品分类
             axios.get('/home/category1')
                 .then(r => {
@@ -49,11 +49,11 @@ new Vue({
                 .catch(e => {
                 })
         },
-        clickGoods: function (merchantId, id) {
+        clickGoods(merchantId, id) {
             location.href = '/store/' + merchantId + '/good/' + id
         }
     },
-    created: function () {
+    created() {
         this.init()
     }
 })

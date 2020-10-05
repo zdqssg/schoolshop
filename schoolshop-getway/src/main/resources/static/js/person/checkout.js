@@ -13,7 +13,7 @@ let paySystemApp = new Vue({
          *
          *
          */
-        parseUrl: function () {
+        parseUrl () {
             let _this = this;
             let pathname = location.pathname;
             let split = pathname.split('/');
@@ -21,11 +21,11 @@ let paySystemApp = new Vue({
             _this.$options.methods.loadOrder(_this, orderId)
 
         },
-        loadOrder: function (_this, orderId) {
+        loadOrder (_this, orderId) {
             axios.get('/api-user/order/toPay/' + orderId)
-                .then(function (response) {
-                    if (response.data.state === 2000) {
-                        let order = response.data.data
+                .then(r=> {
+                    if (r.data.state === 2000) {
+                        let order = r.data.data
                         _this.order = order
                         let sum = 0
                         for (let i = 0; i < order.cart.length; i++) {
@@ -37,26 +37,26 @@ let paySystemApp = new Vue({
                         location.href = '/person/order'
                     }
                 })
-                .catch(function (error) {
+                .catch(e=>{
 
                 })
 
         },
-        loadDefaultAddr: function (_this) {
+        loadDefaultAddr (_this) {
             axios.get('/api-user/receiveAddress/defaultAddr')
-                .then(function (response) {
-                    if (response.data.state == 2000) {
-                        _this.defaultAddr = response.data.data
+                .then(r=> {
+                    if (r.data.state == 2000) {
+                        _this.defaultAddr = r.data.data
                         _this.defaultAddr.has = true
                     } else {
                         _this.defaultAddr.has = false
                     }
                 })
-                .catch(function (error) {
+                .catch(e=> {
 
                 })
         },
-        toPay: function () {
+        toPay () {
             let _this = this;
             if (_this.defaultAddr == null) {
                 _this.toPayHint.msg = '<a href="/person/address">请先设置默认收货地址</a>'
@@ -86,8 +86,8 @@ let paySystemApp = new Vue({
                 '/api-user/order',
                 order,
                 {timeout: 1000 * 60 * 2})
-                .then(function (response) {
-                    let state = response.data.state;
+                .then(r=> {
+                    let state = r.data.state;
 
                     clearInterval(interval)
                     if (state == 2000) {
@@ -97,7 +97,7 @@ let paySystemApp = new Vue({
                         }, 3000)
                         return;
                     }
-                    let message = response.data.message;
+                    let message = r.data.message;
                     if (state == 5000) {
                         _this.toPayHint.msg = '请勿重复提交'
                     } else if (state == 5010 || state == 5050) {
@@ -135,18 +135,18 @@ let paySystemApp = new Vue({
                         _this.toPayHint.msg = '未知错误'
                     }
                 })
-                .catch(function (error) {
+                .catch(e=> {
                     clearInterval(interval)
                     _this.toPayHint.msg = '系统正忙请稍后再试'
                 })
 
 
         },
-        clickGood: function (merchantId, id) {
+        clickGood (merchantId, id) {
             location.href = '/store/' + merchantId + '/good/' + id
         }
     },
-    created: function () {
+    created () {
         this.parseUrl()
     }
 })

@@ -4,60 +4,49 @@ let userInfo = new Vue({
         info: {}
     },
     methods: {
-        loadInfo: function () {
-            $.ajax({
-                url: '/api-user/info/info',
-                success: function (json) {
-                    userInfo.info = json.data
-                }
-            })
+        loadInfo () {
+            axios.get('/api-user/info/info')
+                .then(r=>{
+                    this.info = r.data.data
+                })
         },
-        changeHeaderPhoto: function () {
-            $.ajax({
-                type: 'POST',
-                url: '/api-user/upload/changeHeaderPhoto',
-                data: new FormData($("#user-header-photo")[0]),
-                contentType: false,
-                processData: false,
-                success: function (json) {
-                    if (json.state == 2000) {
-                        userInfo.info.headPhoto=json.data;
-                    } else {
-                        console.log(json.data);
+        getFile () {
+            let formData = new FormData();
+            formData.append("file", $('#user-header-photo')[0].files[0])
+            if (formData.get("file") === undefined) {
+                return;
+            }
+            axios.post('/img/upload', formData)
+                .then(r => {
+                    if (r.data.state === 2000) {
+                        this.info.headPhoto = r.data.data
+                        this.$options.methods.changeHeaderPhoto(this)
                     }
-                }
-            });
+                })
+                .catch(e => {
+                })
         },
-        updateGender: function () {
-            $.ajax({
-                type: 'POST',
-                url: '/api-user/info/changeGender',
-                data:{gender:this.info.gender},
-                success: function (json) {
-                    if (json.state == 2000) {
-
-                    }else {
-
-                    }
-                }
-            })
+        changeHeaderPhoto(_this){
+            let data = {
+                headPhoto: _this.info.headPhoto
+            }
+            axios.put('/api-user/info/headPhoto', data)
         },
-        updateBirth: function () {
-            $.ajax({
-                type: 'POST',
-                url: '/api-user/info/updateBirth',
-                data:{birth:this.info.birth},
-                success: function (json) {
-                    if (json.state == 2000) {
+        updateGender () {
+            let data = {
+                gender:this.info.gender
+            }
+            axios.put('/api-user/info/changeGender',data)
+        },
+        updateBirth () {
+            let data = {
+                birth:this.info.birth
+            }
+            axios.put('/api-user/info/updateBirth',data)
 
-                    }else {
-
-                    }
-                }
-            })
         }
     },
-    created: function () {
+    created () {
         this.loadInfo()
     }
 });

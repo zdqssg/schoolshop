@@ -34,7 +34,7 @@ let resultRoomApp = new Vue({
     },
     methods: {
         //初始化
-        init: function () {
+        init () {
             //获取一级分类
             axios.get('/home/category1')
                 .then(r => {
@@ -49,7 +49,7 @@ let resultRoomApp = new Vue({
         /**
          * 得到当前搜索的是按关键字搜索还是类型搜索
          */
-        parseUrl: function () {
+        parseUrl () {
             let pathname = location.pathname;
             let split = pathname.split('/');
             if (split[2] === 'searchMsg') {
@@ -59,7 +59,7 @@ let resultRoomApp = new Vue({
             }
             this.$options.methods.load(this);
         },
-        load: function (_this) {
+        load (_this) {
             if (_this === undefined) {
                 _this = this
                 _this.filter.pageNum = 0
@@ -71,8 +71,8 @@ let resultRoomApp = new Vue({
                 })
         },
         //分页
-        loadPaging: function (pageNum) {
-            if (this.room.list.size===0){
+        loadPaging (pageNum) {
+            if (this.room.list.size === 0) {
                 return;
             }
             if (pageNum == "" || isNaN(pageNum) || pageNum < 1) {
@@ -85,15 +85,15 @@ let resultRoomApp = new Vue({
         },
 
         //改变分类列表的显示状态
-        changeCategoryState: function () {
+        changeCategoryState () {
             resultRoomApp.categoryHiden = !resultRoomApp.categoryHiden
         },
         /**
          *  //按设置价格范围过滤
          * @param betweenBy 范围查询的字段价格
          */
-        loadByPrice: function (betweenBy) {
-            if (this.room.total===0){
+        loadByPrice (betweenBy) {
+            if (this.room.total === 0) {
                 return;
             }
             if (betweenBy === undefined) betweenBy = null
@@ -106,11 +106,11 @@ let resultRoomApp = new Vue({
 
             this.$options.methods.load(this);
         },
-        clickGood: function (merchantId, id) {
+        clickGood (merchantId, id) {
             location.href = '/store/' + merchantId + '/good/' + id
         }
     },
-    created: function () {
+    created () {
         //解析Url
         this.parseUrl()
         //初始化
@@ -124,24 +124,24 @@ let hotGoodsApp = new Vue({
         hotGoods: []
     },
     methods: {
-        loadStoreHotGoods: function () {
+        loadStoreHotGoods () {
             let _this = this;
             axios.get('/home/hotProducts')
-                .then(function (response) {
-                    if (response.data.state === 2000) {
-                        _this.hotGoods = response.data.data
+                .then(r => {
+                    if (r.data.state === 2000) {
+                        _this.hotGoods = r.data.data
                     }
                 })
-                .catch(function (error) {
+                .catch(e => {
 
                 })
 
         },
-        clickGood: function (merchantId, id) {
+        clickGood(merchantId, id) {
             location.href = '/store/' + merchantId + '/good/' + id
         }
     },
-    created: function () {
+    created () {
         this.loadStoreHotGoods()
     }
 })

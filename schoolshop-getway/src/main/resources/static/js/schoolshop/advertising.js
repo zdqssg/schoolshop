@@ -14,6 +14,7 @@ let advertisingApp = new Vue({
                 this.$options.methods.loadTitleADV(this, element)
             }
         },
+        //记载地址栏Id的头条广告
         loadTitleADV(_this, element) {
             axios.get('/api-advertising/' + element)
                 .then(r => {
