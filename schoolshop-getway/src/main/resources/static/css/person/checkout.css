@@ -1,0 +1,52 @@
+.checkbox-item {
+    width: 100%;
+}
+
+.checkbox-item-top > li {
+    height: 30px !important;
+}
+
+.checkbox-item > li {
+    float: left;
+    height: 120px;
+    width: 25%;
+    line-height: 100px;
+}
+
+.good-item {
+
+    height: 80px;
+}
+
+.good-item > img {
+    width: 100px;
+    height: 100px;
+}
+
+.price-item {
+
+}
+
+.number-item {
+
+}
+
+.toPayHint {
+    display: inline-block;
+    width: 300px;
+    height: 50px;
+    background: gainsboro;
+    border-radius: 5px;
+    border: black 1px solid;
+    line-height: 50px;
+}
+.userWarn{
+    height: 100px;
+}
+.userWarn>.text-center{
+    font-size: 50px;
+    line-height: 100px;
+}
+.userWarn textarea{
+    resize:none;
+}

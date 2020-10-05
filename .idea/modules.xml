@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/schoolshop.iml" filepath="$PROJECT_DIR$/schoolshop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/schoolshop-api-merchant/schoolshop-api-merchant.iml" filepath="$PROJECT_DIR$/schoolshop-api-merchant/schoolshop-api-merchant.iml" />
+      <module fileurl="file://$PROJECT_DIR$/schoolshop-api-user/schoolshop-api-user.iml" filepath="$PROJECT_DIR$/schoolshop-api-user/schoolshop-api-user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/schoolshop-eureka/schoolshop-eureka.iml" filepath="$PROJECT_DIR$/schoolshop-eureka/schoolshop-eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/schoolshop-generator/schoolshop-generator.iml" filepath="$PROJECT_DIR$/schoolshop-generator/schoolshop-generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/schoolshop-getway/schoolshop-getway.iml" filepath="$PROJECT_DIR$/schoolshop-getway/schoolshop-getway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/schoolshop-model/schoolshop-model.iml" filepath="$PROJECT_DIR$/schoolshop-model/schoolshop-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/schoolshop-resource/schoolshop-resource.iml" filepath="$PROJECT_DIR$/schoolshop-resource/schoolshop-resource.iml" />
+    </modules>
+  </component>
+</project>

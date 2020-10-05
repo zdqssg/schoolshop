@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zn_CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="M_Adnan">
+    <title>关于我们</title>
+    <!--网页图标-->
+    <link rel="shortcut icon" th:href="@{/img/schoolshop/shcool.png}">
+    <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+    <link rel="stylesheet" th:href="@{/rs-plugin/css/settings.css}" media="screen"/>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" th:href="@{/bootstrap3/css/bootstrap.css}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/bootstrap3/font-awesome/css/font-awesome.min.css}">
+    <link th:href="@{/css/schoolshop/ionicons.min.css}" rel="stylesheet">
+    <link th:href="@{/css/schoolshop/main.css}" rel="stylesheet">
+    <link th:href="@{/css/schoolshop/style.css}" rel="stylesheet">
+    <link th:href="@{/css/schoolshop/responsive.css}" rel="stylesheet">
+    <!-- JavaScripts -->
+    <script th:src="@{/js/schoolshop/modernizr.js}"></script>
+    <!-- Online Fonts -->
+    <link th:href='@{/css/googleapis/familyMontserrat.css}' rel='stylesheet' type='text/css'>
+    <link th:href='@{/css/googleapis/familyPlayfaiDisplay.css}' rel='stylesheet' type='text/css'>
+
+    <!--视屏-->
+    <link rel="stylesheet" th:href="@{/js/video/depend/videoCT.css}">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script th:src="@{/js/html5shiv.js}"></script>
+    <script th:src="@{/js/respond.min.js}"></script>
+    <![endif]-->
+
+</head>
+<body>
+
+<!-- 加载动画 -->
+<div th:replace="~{commons :: loader}"></div>
+<!-- 容器 -->
+<div id="wrap">
+    <!-- 导航 -->
+    <header>
+        <div class="sticky">
+            <div class="container">
+                <!-- schoolshop-logo -->
+                <div th:replace="~{commons :: schoolshop-logo}"></div>
+                <nav class="navbar ownmenu">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#nav-open-btn" aria-expanded="false">
+                            <span class="sr-only">切换导航</span>
+                            <span class="icon-bar"><i class="fa fa-navicon"></i></span></button>
+                    </div>
+                    <!-- schoolshop-nav-left -->
+                    <div th:replace="~{commons :: schoolshop-nav-left}"></div>
+                    <!-- nav-right -->
+                    <div th:replace="~{commons :: nav-right}"></div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!--======= 横幅 =========-->
+    <section class="sub-bnr" data-stellar-background-ratio="0.5">
+        <div class="position-center-center">
+            <div class="container">
+                <h4>We are the family</h4>
+                <p>爱是一种享受，是一种奉献</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 内容 -->
+    <div id="content">
+
+        <!-- 历史 -->
+        <section class="history-block padding-top-100 padding-bottom-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-10 center-block">
+                        <div class="col-sm-9 center-block">
+                            <h4>时间简史</h4>
+                            <p>
+                                习惯了每天进空间看看你们每个人的动态。然后知道你们谁过得开心，谁在纠结，谁和谁开始一段新的感情，谁和谁结束一场旧的纠葛。远远的关心和想念，却并不联系。只是，我想你们。习惯了每天进空间看看你们每个人的动态。然后知道你们谁过得开心，谁在纠结，谁和谁开始一段新的感情，谁和谁结束一场旧的纠葛。远远的关心和想念，却并不联系。只是，我想你们。<br>
+                                <br>
+                                习惯了每天进空间看看你们每个人的动态。然后知道你们谁过得开心，谁在纠结，谁和谁开始一段新的感情，谁和谁结束一场旧的纠葛。远远的关心和想念，却并不联系。只是，我想你们。习惯了每天进空间看看你们每个人的动态。然后知道你们谁过得开心，谁在纠结，谁和谁开始一段新的感情，谁和谁结束一场旧的纠葛。远远的关心和想念，却并不联系。只是，我想你们。
+                            </p>
+                        </div>
+
+                        <!-- 图片 -->
+                        <img class="img-responsive margin-top-80 margin-bottom-80"
+                             th:src="@{/img/our/20200902042153.jpg}"
+                             alt="">
+                        <div class="vision-text">
+                            <div class="col-lg-5">
+                                <h5 class="text-left">我们的愿景</h5>
+                                <h2>我们用丰富的经验制作出很棒的东西</h2>
+                            </div>
+                            <div class="col-lg-7">
+                                <p>爱是一种享受，是一种奉献。请大驾光临。<br>
+                                    <br>
+                                    爱是一种享受，是一种奉献。请大驾光临。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 文化 -->
+        <section class="cultur-block">
+            <ul>
+                <li><img th:src="@{/img/our/20200902042747.jpg}" alt=""></li>
+                <li><img th:src="@{/img/our/20200902042225.jpg}" alt=""></li>
+                <li><img th:src="@{/img/our/20200902042244.jpg}" alt=""></li>
+                <li><img th:src="@{/img/our/20200902042251.jpg}" alt=""></li>
+            </ul>
+
+            <!-- 文化文本 -->
+            <div class="position-center-center">
+                <div class="container">
+                    <div class="col-sm-6 center-block">
+                        <h4>爱是一种享受，是一种奉献。请大驾光临。</h4>
+                        <p>爱是一种享受</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 视频 -->
+        <section class="video-block">
+            <img style="height: 100%" class="img-responsive" src="/img/system/video-img.jpg"
+                                          alt="">
+            <video width="100%" height="100%" id="video1"></video>
+        </section>
+        <!-- 我们的团队 -->
+        <section class="our-team light-gray-bg padding-top-150 padding-bottom-100">
+            <div class="container">
+                <div class="heading text-center">
+                    <h4>我们的团队</h4>
+                    <span>以爱为纽带，携手打造伟大品牌</span></div>
+
+                <!-- 团队 -->
+                <ul class="row">
+                    <!-- 成员1 -->
+                    <li class="col-md-4 text-center animate fadeInUp" data-wow-delay="0.6s">
+                        <article>
+                            <!-- 头像 -->
+                            <div class="avatar">
+                                <img class="img-circle" th:src="@{/img/our/te/1.PNG}" alt="">
+                            </div>
+                            <!-- 资料 -->
+                            <div class="team-names">
+                                <h6>刘苍松老师</h6>
+                                <p>教研部总监(具有10 年的Java 企业应用开发经验。曾经历任德国Software AG 技术顾问，美国Dach...)</p>
+                            </div>
+                        </article>
+                    </li>
+                    <!-- 成员2 -->
+                    <li class="col-md-4 text-center animate fadeInUp" data-wow-delay="0.6s">
+                        <article>
+                            <!-- 头像 -->
+                            <div class="avatar">
+                                <img class="img-circle" th:src="@{/img/our/te/2.PNG}" alt="">
+                            </div>
+                            <!-- 资料 -->
+                            <div class="team-names">
+                                <h6>刘国斌老师</h6>
+                                <p>教研部(曾创办蓝懿科技有限责任公司从事总经理职务负责iOS教学及管理工作。)</p>
+                            </div>
+                        </article>
+                    </li>
+                    <!-- 成员3 -->
+                    <li class="col-md-4 text-center animate fadeInUp" data-wow-delay="0.6s">
+                        <article>
+                            <!-- 头像 -->
+                            <div class="avatar">
+                                <img class="img-circle" th:src="@{/img/our/te/3.PNG}" alt="">
+                            </div>
+                            <!-- 资料 -->
+                            <div class="team-names">
+                                <h6>王克晶老师</h6>
+                                <p>授课讲师(浪潮集团前项目经理。精通Java与.NET 技术， 熟练的跨平台面向对象开发经验，技术功底深厚...)</p>
+                            </div>
+                        </article>
+                    </li>
+                    <!-- 成员4 -->
+                    <li class="col-md-4 text-center animate fadeInUp" data-wow-delay="0.6s">
+                        <article>
+                            <!-- 头像 -->
+                            <div class="avatar">
+                                <img class="img-circle" th:src="@{/img/our/te/4.PNG}" alt="">
+                            </div>
+                            <!-- 资料 -->
+                            <div class="team-names">
+                                <h6>范传奇老师</h6>
+                                <p>授课讲师(曾任职联想集团，开发了新疆电信政企客户管理系统)</p>
+                            </div>
+                        </article>
+                    </li>
+                    <!-- 成员5 -->
+                    <li class="col-md-4 text-center animate fadeInUp" data-wow-delay="0.6s">
+                        <article>
+                            <!-- 头像 -->
+                            <div class="avatar">
+                                <img class="img-circle" width="225" th:src="@{/img/our/te/5.jpg}" alt="">
+                            </div>
+                            <!-- 资料 -->
+                            <div class="team-names">
+                                <h6>张浩岚老师</h6>
+                                <p>授课讲师(未知)</p>
+                            </div>
+                        </article>
+                    </li>
+                    <!-- 成员6 -->
+                    <li class="col-md-4 text-center animate fadeInUp" data-wow-delay="0.6s">
+                        <article>
+                            <!-- 头像 -->
+                            <div class="avatar">
+                                <img class="img-circle" width="225" th:src="@{/img/our/te/6.jpg}" alt="">
+                            </div>
+                            <!-- 资料 -->
+                            <div class="team-names">
+                                <h6>东哥</h6>
+                                <p>项目经理(资深达人，武功深不可测)</p>
+                            </div>
+                        </article>
+                    </li>
+                    <!-- 成员 -->
+                    <li class="col-md-4 text-center animate fadeInUp" data-wow-delay="0.6s">
+                        <article>
+                            <!-- 头像 -->
+                            <div class="avatar">
+                                <img class="img-circle" th:src="@{/img/our/te/1.PNG}" alt="">
+                            </div>
+                            <!-- 资料 -->
+                            <div class="team-names">
+                                <h6>刘苍松老师</h6>
+                                <p>教研部总监(具有10 年的Java 企业应用开发经验。曾经历任德国Software AG 技术顾问，美国Dach...)</p>
+                            </div>
+                        </article>
+                    </li>
+                    <!-- 成员 -->
+                    <li class="col-md-4 text-center animate fadeInUp" data-wow-delay="0.6s">
+                        <article>
+                            <!-- 头像 -->
+                            <div class="avatar">
+                                <img class="img-circle" th:src="@{/img/our/te/1.PNG}" alt="">
+                            </div>
+                            <!-- 资料 -->
+                            <div class="team-names">
+                                <h6>刘苍松老师</h6>
+                                <p>教研部总监(具有10 年的Java 企业应用开发经验。曾经历任德国Software AG 技术顾问，美国Dach...)</p>
+                            </div>
+                        </article>
+                    </li>
+                    <!-- 成员 -->
+                    <li class="col-md-4 text-center animate fadeInUp" data-wow-delay="0.6s">
+                        <article>
+                            <!-- 头像 -->
+                            <div class="avatar">
+                                <img class="img-circle" th:src="@{/img/our/te/1.PNG}" alt="">
+                            </div>
+                            <!-- 资料 -->
+                            <div class="team-names">
+                                <h6>刘苍松老师</h6>
+                                <p>教研部总监(具有10 年的Java 企业应用开发经验。曾经历任德国Software AG 技术顾问，美国Dach...)</p>
+                            </div>
+                        </article>
+                    </li>
+                    <!-- 成员 -->
+                    <li class="col-md-4 text-center animate fadeInUp" data-wow-delay="0.6s">
+                        <article>
+                            <!-- 头像 -->
+                            <div class="avatar">
+                                <img class="img-circle" th:src="@{/img/our/te/1.PNG}" alt="">
+                            </div>
+                            <!-- 资料 -->
+                            <div class="team-names">
+                                <h6>刘苍松老师</h6>
+                                <p>教研部总监(具有10 年的Java 企业应用开发经验。曾经历任德国Software AG 技术顾问，美国Dach...)</p>
+                            </div>
+                        </article>
+                    </li>
+                    <!-- 成员 -->
+                    <li class="col-md-4 text-center animate fadeInUp" data-wow-delay="0.6s">
+                        <article>
+                            <!-- 头像 -->
+                            <div class="avatar">
+                                <img class="img-circle" th:src="@{/img/our/te/1.PNG}" alt="">
+                            </div>
+                            <!-- 资料 -->
+                            <div class="team-names">
+                                <h6>刘苍松老师</h6>
+                                <p>教研部总监(具有10 年的Java 企业应用开发经验。曾经历任德国Software AG 技术顾问，美国Dach...)</p>
+                            </div>
+                        </article>
+                    </li>
+                    <!-- 成员 -->
+                    <li class="col-md-4 text-center animate fadeInUp" data-wow-delay="0.6s">
+                        <article>
+                            <!-- 头像 -->
+                            <div class="avatar">
+                                <img class="img-circle" th:src="@{/img/our/te/1.PNG}" alt="">
+                            </div>
+                            <!-- 资料 -->
+                            <div class="team-names">
+                                <h6>刘苍松老师</h6>
+                                <p>教研部总监(具有10 年的Java 企业应用开发经验。曾经历任德国Software AG 技术顾问，美国Dach...)</p>
+                            </div>
+                        </article>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 推文 -->
+        <section class="tweet padding-top-100 padding-bottom-100">
+            <div class="container">
+                <div class="col-md-8 center-block"><i class="icon-social-twitter"></i>
+                    <p>我的财富并不是因为我拥有很多 而是我要求的很少</p>
+                    <span><span class="primary-color">@刘苍松</span> 通过推特</span></div>
+            </div>
+        </section>
+
+        <!-- 与我们合作 -->
+        <section class="our-team padding-top-150 padding-bottom-100">
+            <div class="container">
+                <div class="heading text-center">
+                    <h4>我们和最好的人合作</h4>
+                    <span>以下都是扯蛋</span>
+                    <span>我们很自豪我们有很棒的赞助商</span></div>
+
+                <ul class="clients-img">
+                    <li><img class="img-responsive" th:src="@{/img/our/gs/a.png}" alt=""></li>
+                    <li><img class="img-responsive" th:src="@{/img/our/gs/b.png}" alt=""></li>
+                    <li><img class="img-responsive" th:src="@{/img/our/gs/c.png}" alt=""></li>
+                    <li><img class="img-responsive" th:src="@{/img/our/gs/d.png}" alt=""></li>
+                </ul>
+
+            </div>
+        </section>
+
+        <!-- 关于我们 -->
+        <section th:replace="~{commons :: aboutUs}"></section>
+    </div>
+
+    <!--======= 底部 =========-->
+    <footer th:replace="~{commons :: footer}"></footer>
+</div>
+
+<script th:src="@{/js/jquery-1.10.2.min.js}"></script>
+<script th:src="@{/js/schoolshop/bootstrap.min.js}"></script>
+<script th:src="@{/js/schoolshop/own-menu.js}"></script>
+<script th:src="@{/js/schoolshop/jquery.lighter.js}"></script>
+<script th:src="@{/js/schoolshop/owl.carousel.min.js}"></script>
+<!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
+<script th:src="@{/rs-plugin/js/jquery.tp.t.min.js}"></script>
+<script th:src="@{/rs-plugin/js/jquery.tp.min.js}"></script>
+<script th:src="@{/js/schoolshop/main.js}"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+<!--自定义js-->
+<!--头部-->
+<script src="/js/schoolshop/homeHeader.js"></script>
+<script src="/js/schoolshop/userHeader.js"></script>
+
+<!--视频jqery-->
+<script th:src="@{/js/video/depend/videoCT.js}"></script>
+<script th:src="@{/js/video/index.js}"></script>
+<!-- Begin Map Script -->
+<script src='http://maps.google.cn/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM'></script>
+
+<script type="text/javascript">
+    /*==========  Map  ==========*/
+    var map;
+
+    function initialize_map() {
+        if ($('#map').length) {
+            var myLatLng = new google.maps.LatLng(-37.814199, 144.961560);
+            var mapOptions = {
+                zoom: 17,
+                center: myLatLng,
+                scrollwheel: false,
+                panControl: false,
+                zoomControl: true,
+                scaleControl: false,
+                mapTypeControl: false,
+                streetViewControl: false
+            };
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                tittle: 'Envato',
+                icon: '/img/system/map-locator.png'
+            });
+        } else {
+            return false;
+        }
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize_map);
+</script>
+</body>
+</html>

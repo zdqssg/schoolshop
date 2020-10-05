@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zn_CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="M_Adnan">
+    <title>支付中心</title>
+    <!-- 幻灯片效果插件SLIDER REVOLUTION 4.x CSS SETTINGS -->
+    <link rel="stylesheet" th:href="@{/rs-plugin/css/settings.css}" media="screen"/>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" th:href="@{/bootstrap3/css/bootstrap.css}">
+    <!-- 定制的 CSS -->
+    <link rel="stylesheet" th:href="@{/bootstrap3/font-awesome/css/font-awesome.min.css}">
+    <link th:href="@{/css/schoolshop/ionicons.min.css}" rel="stylesheet">
+    <link th:href="@{/css/schoolshop/main.css}" rel="stylesheet">
+    <link th:href="@{/css/schoolshop/style.css}" rel="stylesheet">
+    <link th:href="@{/css/schoolshop/responsive.css}" rel="stylesheet">
+    <!-- JavaScripts -->
+    <script th:src="@{/js/schoolshop/modernizr.js}"></script>
+    <!-- Online Fonts -->
+    <link th:href='@{/css/googleapis/familyMontserrat.css}' rel='stylesheet' type='text/css'>
+    <link th:href='@{/css/googleapis/familyPlayfaiDisplay.css}' rel='stylesheet' type='text/css'>
+
+    <!--IE8以下的浏览器支持方案-->
+    <!--[if lt IE 9]>
+    <script th:src="@{/js/html5shiv.js}"></script>
+    <script th:src="@{/js/respond.min.js}"></script>
+    <![endif]-->
+    <link href='/css/person/checkout.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<!-- 加载动画 -->
+<div th:replace="~{commons :: loader}"></div>
+<!-- 容器 -->
+<div id="wrap">
+
+    <!-- 导航 -->
+    <header style="padding: 0">
+        <div class="sticky">
+            <div class="container">
+                <!-- schoolshop-logo -->
+                <div th:replace="~{commons :: schoolshop-logo}"></div>
+                <nav class="navbar ownmenu">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#nav-open-btn" aria-expanded="false">
+                            <span class="sr-only">切换导航</span>
+                            <span class="icon-bar"><i class="fa fa-navicon"></i></span></button>
+                    </div>
+                    <!-- schoolshop-nav-left -->
+                    <div th:replace="~{commons :: schoolshop-nav-left}"></div>
+                    <!-- nav-right -->
+                    <div th:replace="~{commons :: nav-right}"></div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!--内容 -->
+    <div id="content">
+        <!-- 热门商品 -->
+        <section class="padding-top-20 padding-bottom-100" id="paySystemApp">
+            <div class="container">
+                <!-- Main Heading -->
+                <div class="heading text-center">
+                    <h4>校购支付系统</h4>
+                    <span>School purchase payment system</span>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 ">
+                        <div class="margin-bottom-100">
+                            <hr>
+                            <ul class="checkbox-item checkbox-item-top ">
+                                <li class="good-item">
+                                    名称
+                                </li>
+                                <li class="good-item">
+                                </li>
+                                <li class="price-item">
+                                    价格
+                                </li>
+                                <li class="number-item">
+                                    数量
+                                </li>
+                            </ul>
+                            <hr>
+                        </div>
+                        <div v-for="c in order.cart" class="margin-bottom-20">
+                            <ul class="checkbox-item ">
+                                <li class="good-item" @click="clickGood(c.good.merchantId,c.good.id)">
+                                    <p v-text="c.good.goodsName"></p>
+                                </li>
+                                <li class="good-item" @click="clickGood(c.good.merchantId,c.good.id)">
+                                    <img class="img-rounded img-responsive"
+                                         :src="c.good.goodsImgPath">
+                                </li>
+                                <li class="price-item">
+                                    <span v-text="c.good.goodsPrice"></span>
+                                </li>
+                                <li class="number-item">
+                                    x <span v-text="c.number"></span>
+                                </li>
+                            </ul>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div>收货地址:</div>
+                        <div v-if="defaultAddr!=null">
+                            <span class="padding-right-3" v-text="defaultAddr.username"></span>
+                            <span class="padding-right-3" v-text="defaultAddr.phone"></span>
+                            <span class="padding-right-3" v-text="defaultAddr.provinceName"></span>
+                            <span class="padding-right-3" v-text="defaultAddr.cityName"></span>
+                            <span class="padding-right-3" v-text="defaultAddr.areaName"></span>
+                            <span class="padding-right-3" v-text="defaultAddr.streetName"></span>
+                            <a class="bg bg-warning pull-right"
+                               href="/person/address">[修改]</a>
+                            <p v-text="defaultAddr.detail"></p></p>
+
+                        </div>
+                        <div v-else>
+                            未设置默认地址 <a class="bg-warning" href="/person/address">[设置]</a>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="papular-block row userWarn">
+                    <div class="col-xs-2 text-center" >
+                       <h1>备注</h1>
+                    </div>
+                    <div class="col-xs-10 ">
+                        <textarea class="form-control"
+                                  rows="3"
+                                  maxlength="100"
+                                  v-model="order.userWarn"></textarea>
+                    </div>
+                </div>
+                <hr>
+                <div class="papular-block row">
+                    <div class="col-xs-12 text-center">
+                        总计:<label>
+                         <input class="form-control"
+                                type="text"
+                                v-model="sum"
+                                readonly/>
+                         </label>
+                    </div>
+                </div>
+                <hr>
+                <div class="papular-block row">
+                    <div class="col-xs-12 text-center">
+                        <span v-if="toPayHint.msg!=''" class="toPayHint margin-top-10" v-html="toPayHint.msg"></span>
+                        <br>
+                        <span class="btn btn-success margin-top-10" @click="toPay()">支付</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于我们 -->
+        <section th:replace="~{commons :: aboutUs}"></section>
+    </div>
+
+    <!--======= 底部 =========-->
+    <footer th:replace="~{commons :: footer}"></footer>
+</div>
+
+
+<script th:src="@{/js/jquery-1.10.2.min.js}"></script>
+<script th:src="@{/js/schoolshop/bootstrap.min.js}"></script>
+<script th:src="@{/js/schoolshop/own-menu.js}"></script>
+<script th:src="@{/js/schoolshop/jquery.lighter.js}"></script>
+<script th:src="@{/js/schoolshop/owl.carousel.min.js}"></script>
+<!-- 轮播图效果插件SLIDER REVOLUTION 4.x SCRIPTS  -->
+<script th:src="@{/rs-plugin/js/jquery.tp.t.min.js}"></script>
+<script th:src="@{/rs-plugin/js/jquery.tp.min.js}"></script>
+<script th:src="@{/js/schoolshop/main.js}"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+<!--自定义js-->
+<!--头部-->
+<script src="/js/schoolshop/homeHeader.js"></script>
+<script src="/js/schoolshop/userHeader.js"></script>
+
+
+<script src="/js/person/checkout.js"></script>
+</body>
+</html>

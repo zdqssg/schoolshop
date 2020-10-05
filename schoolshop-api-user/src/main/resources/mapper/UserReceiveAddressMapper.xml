@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.schoolshop.api.user.mapper.UserReceiveAddressMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.tedu.schoolshop.model.UserReceiveAddress">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="phone" property="phone" />
+        <result column="username" property="username" />
+        <result column="state" property="state" />
+        <result column="province_code" property="provinceCode" />
+        <result column="city_code" property="cityCode" />
+        <result column="area_code" property="areaCode" />
+        <result column="street_code" property="streetCode" />
+        <result column="detail" property="detail" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+    <resultMap id="UserReceiveAddressVoResultMap" type="cn.tedu.schoolshop.vo.userReceiveAddress.UserReceiveAddressVo">
+        <id column="id" property="id" />
+        <result column="phone" property="phone" />
+        <result column="username" property="username" />
+        <result column="state" property="state" />
+        <result column="PROVINCE_NAME" property="provinceName" />
+        <result column="CITY_NAME" property="cityName" />
+        <result column="AREA_NAME" property="areaName" />
+        <result column="STREET_NAME" property="streetName" />
+        <result column="detail" property="detail" />
+    </resultMap>
+    <select id="findByUserId" resultMap="UserReceiveAddressVoResultMap">
+        SELECT r.id,r.username,r.phone,r.state,r.detail,
+        bp.PROVINCE_NAME,bp.PROVINCE_CODE,
+        bc.CITY_NAME,bc.CITY_CODE,
+        ba.AREA_NAME,ba.AREA_CODE,
+        bs.STREET_NAME,bs.STREET_CODE
+        FROM user_receive_address r
+        LEFT JOIN bs_province bp on r.province_code = bp.PROVINCE_CODE
+        LEFT JOIN bs_city bc on r.city_code = bc.CITY_CODE
+        LEFT JOIN bs_area ba on r.area_code = ba.AREA_CODE
+        LEFT JOIN bs_street bs on r.street_code = bs.STREET_CODE
+        WHERE (r.state=1 OR r.state=2)
+        AND r.user_id=#{userId}
+        ORDER BY r.create_time DESC
+    </select>
+    <select id="findDefaultAddrByUserId" resultMap="UserReceiveAddressVoResultMap">
+        SELECT r.id,r.username,r.phone,r.state,r.detail,
+        bp.PROVINCE_NAME,bp.PROVINCE_CODE,
+        bc.CITY_NAME,bc.CITY_CODE,
+        ba.AREA_NAME,ba.AREA_CODE,
+        bs.STREET_NAME,bs.STREET_CODE
+        FROM user_receive_address r
+        LEFT JOIN bs_province bp on r.province_code = bp.PROVINCE_CODE
+        LEFT JOIN bs_city bc on r.city_code = bc.CITY_CODE
+        LEFT JOIN bs_area ba on r.area_code = ba.AREA_CODE
+        LEFT JOIN bs_street bs on r.street_code = bs.STREET_CODE
+        WHERE  r.user_id=#{userId}
+        AND r.state=2
+    </select>
+</mapper>

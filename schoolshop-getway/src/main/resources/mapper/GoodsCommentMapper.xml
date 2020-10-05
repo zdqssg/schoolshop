@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.schoolshop.getway.mapper.GoodsCommentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.tedu.schoolshop.model.GoodsComment">
+        <id column="id" property="id"/>
+        <result column="level" property="level"/>
+        <result column="comment" property="comment"/>
+        <result column="approval" property="approval"/>
+        <result column="state" property="state"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="user_id" property="userId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <sql id="BaseSql">
+        id,level,comment,approval,state,goods_id,user_id,create_time,update_time
+    </sql>
+    <select id="selectByGoodId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BaseSql"/>
+        FROM goods_comment
+        WHERE goods_id=#{goodId}
+        AND (state=1 OR state=2)
+        ORDER BY create_time DESC
+    </select>
+    <select id="findCommentById" resultMap="BaseResultMap">
+        select
+        <include refid="BaseSql"/>
+        from goods_comment
+        where id=${id}
+        and (state=1 or state=2)
+    </select>
+    <update id="updateCommentById" parameterType="cn.tedu.schoolshop.model.GoodsComment">
+        update goods_comment
+        <set>
+            <if test="level != null">
+                level = #{level},
+            </if>
+            <if test="comment != null">
+                comment = #{comment},
+            </if>
+            <if test="approval != null">
+                approval = #{approval},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

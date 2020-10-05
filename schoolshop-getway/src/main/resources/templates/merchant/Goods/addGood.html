@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zn_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加商品</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/JqeryKJ/merchantAdmin/favicon.ico">
+    <link href="/JqeryKJ/merchantAdmin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/JqeryKJ/merchantAdmin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="/JqeryKJ/merchantAdmin/css/animate.css" rel="stylesheet">
+    <link href="/JqeryKJ/merchantAdmin/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<body class="gray-bg">
+<div class="container">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>上传商品信息<small>请不要上传违法商品，发现将封号处理</small></h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form v-on:submit.prevent="addGood" id="addGoodForm">
+                            <div class="form-group">
+                                <label>商品名称</label>
+                                <input type="text"
+                                       class="form-control"
+                                       minlength="3" maxlength="100"
+                                       v-model="good.goodsName"
+                                       placeholder="商品名称(3-100)"
+                                       required="required">
+                            </div>
+                            <div class="form-group">
+                                <label>商品价格</label>
+                                <input type="number"
+                                       class="form-control"
+                                       v-model="good.goodsPrice"
+                                       minlength="1" maxlength="11"
+                                       placeholder="商品售价"
+                                       required="required">
+                            </div>
+                            <div class="form-group">
+                                <label>商品数量</label>
+                                <input type="number"
+                                       class="form-control"
+                                       v-model="good.goodsRepertory"
+                                       minlength="1" maxlength="11"
+                                       placeholder="商品库存"
+                                       required="required">
+                            </div>
+                            <div class="form-group">
+                                <label>商品描述</label>
+                                <input type="text"
+                                       class="form-control"
+                                       v-model="good.goodsDescribe"
+                                       minlength="2" maxlength="50"
+                                       placeholder="商品描述(2-50)"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label>选择分类</label>
+                                <select class="form-control"
+                                        v-model="good.category3Id"
+                                        aria-describedby="inputSuccess2Status"
+                                        required="required">
+                                    <option v-for="c in category3" :value="c.id">
+                                        {{c.name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>商品照片
+                                    <input type="file" id="goodsImg" @change="upload"
+                                           allowexts="gif,jpeg,jpg,png,bmp" accept="image/*" required="required">
+                                    <input type="hidden" name="goodsImgPath" v-model="good.goodsImgPath" required="required">
+                                    <img style="width: 300px;height: 300px"
+                                         v-if="good.goodsImgPath!==''&&good.goodsImgPath!==undefined"
+                                         :src="good.goodsImgPath">
+                                </label>
+                            </div>
+                            <div class="text-center">
+                                <a>{{msg}}</a>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-danger btn-lg ">添加商品</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="/JqeryKJ/merchantAdmin/js/jquery.min.js?v=2.1.4"></script>
+<script src="/JqeryKJ/merchantAdmin/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+<script src="/js/commons/getTime.js"></script>
+
+<!-- 自定义js -->
+<script src="/JqeryKJ/merchantAdmin/js/content.js?v=1.0.0"></script>
+<script src="/js/merchant/addGood.js"></script>
+</body>
+</html>

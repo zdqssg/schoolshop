@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.schoolshop.getway.mapper.MerchantSlideMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.tedu.schoolshop.model.MerchantSlide">
+        <id column="id" property="id"/>
+        <result column="merchant_id" property="merchantId"/>
+        <result column="good_id" property="goodId"/>
+        <result column="state" property="state"/>
+        <result column="base_title" property="baseTitle"/>
+        <result column="second_title" property="secondTitle"/>
+        <result column="btn" property="btn"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <resultMap id="MerchantStoreSlideResultMap" type="cn.tedu.schoolshop.vo.merchantSlide.MerchantStoreSlideVo">
+        <result column="goodId" property="goodId"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="goods_price" property="goodsPrice"/>
+        <result column="goods_img_path" property="goodsImgPath"/>
+        <result column="base_title" property="baseTitle"/>
+        <result column="second_title" property="secondTitle"/>
+        <result column="btn" property="btn"/>
+    </resultMap>
+    <select id="findMerchantStoreSlide" parameterType="java.lang.Integer" resultMap="MerchantStoreSlideResultMap">
+            SELECT g.id goodId,
+               g.goods_name,
+               g.goods_price,
+               g.goods_img_path,
+               s.base_title,
+               s.second_title,
+               s.btn
+            FROM goods g
+                 LEFT JOIN merchant_slide s
+                           ON g.id = s.good_id
+            WHERE
+             g.goods_state = 1
+            AND s.state = 1
+            AND s.merchant_id = #{findMerchantStoreSlide}
+    </select>
+
+</mapper>

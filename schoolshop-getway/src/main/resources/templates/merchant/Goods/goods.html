@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zn_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品管理</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/JqeryKJ/merchantAdmin/favicon.ico">
+    <link href="/JqeryKJ/merchantAdmin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/JqeryKJ/merchantAdmin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="/JqeryKJ/merchantAdmin/css/animate.css" rel="stylesheet">
+    <link href="/JqeryKJ/merchantAdmin/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="file-manager" id="v-manager">
+                        <h5>显示：</h5>
+                        <a @click="loadGoods(0),active(0)"
+                           :class="[{active:0==initIndex},'file-control']">
+                            所有
+                        </a>
+                        <a v-for="(c,index) in category3"
+                           @click="loadGoods(c.id),active(index+1)"
+                           :class="[{active:index+1==initIndex},'file-control']">
+                            {{c.name}}
+                        </a>
+                        <div class="hr-line-dashed"></div>
+                        <a href="addGood" class="btn btn-primary btn-block"
+                           onclick="changeRefreshHref(this)">添加商品</a>
+                        <div class="hr-line-dashed"></div>
+                        <h5>商品分类</h5>
+                        <ul class="folder-list" style="padding: 0">
+                            <li><a @click="loadGoods(0)"><i class="fa fa-folder"></i>所有</a>
+                            </li>
+                            <li v-for="c in category3">
+                                <a @click="loadGoods(c.id)"><i class="fa fa-folder"></i>{{c.name}}</a>
+                            </li>
+                        </ul>
+                        <div>
+
+                            <!--                        <h5 class="tag-title">标签</h5>-->
+                            <!--                        <ul class="tag-list" style="padding: 0">-->
+                            <!--                            <li><a href="goods.html">爱人</a>-->
+                            <!--                            </li>-->
+                            <!--                            <li><a href="goods.html">工作</a>-->
+                            <!--                            </li>-->
+                            <!--                            <li><a href="goods.html">家庭</a>-->
+                            <!--                            </li>-->
+                            <!--                            <li><a href="goods.html">孩子</a>-->
+                            <!--                            </li>-->
+                            <!--                            <li><a href="goods.html">假期</a>-->
+                            <!--                            </li>-->
+                            <!--                            <li><a href="goods.html">音乐</a>-->
+                            <!--                            </li>-->
+                            <!--                            <li><a href="goods.html">照片</a>-->
+                            <!--                            </li>-->
+                            <!--                            <li><a href="goods.html">电影</a>-->
+                            <!--                            </li>-->
+                            <!--                        </ul>-->
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9 animated fadeInRight" id="v-goods">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="pull-right">
+                        当前第<span v-text="goods.pageNum"></span>页，
+                        共 <span v-text="goods.pages"></span>页，
+                        共 <span v-text="goods.total"></span>件商品
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="file-box" v-for="g in goods.list">
+                        <div class="file">
+                            <a :href="'goods/'+g.id" onclick="changeRefreshHref(this)">
+                                <span class="corner"></span>
+                                <img style="width: 200px;height: 200px" alt="images" class="img-responsive"
+                                     :src="g.goodsImgPath">
+                                <div class="file-name">
+                                    <span class="view-text" v-text="g.goodsName"></span><br/>
+                                    <small v-text="'发布商品时间:'+g.createTime"></small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <nav>
+                        <ul class="pagination">
+                            <li><a @click="loadGoods(1)">首页</a></li>
+                            <li>
+                                <a @click="loadGoods((goods.hasPreviousPage?goods.prePage:1))" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li v-for="n in goods.navigatepageNums"><a @click="loadGoods(n)" v-text="n"></a></li>
+                            <li>
+                                <a @click="loadGoods((goods.hasNextPage?goods.nextPage:goods.pages))" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li><a @click="loadGoods(goods.pages)">尾页</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="/JqeryKJ/merchantAdmin/js/jquery.min.js?v=2.1.4"></script>
+<script src="/JqeryKJ/merchantAdmin/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/vue.js"></script>
+<!-- 自定义js -->
+<script src="/JqeryKJ/merchantAdmin/js/content.js?v=1.0.0"></script>
+<script src="/js/commons/getTime.js"></script>
+
+
+<script src="/js/merchant/goods.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.file-box').each(function () {
+            animationHover(this, 'pulse');
+        });
+    });
+</script>
+
+
+</body>
+
+</html>

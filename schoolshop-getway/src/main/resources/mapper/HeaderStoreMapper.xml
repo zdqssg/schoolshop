@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.schoolshop.getway.mapper.HeaderStoreMapper">
+    <select id="selectHeaderStore" resultType="cn.tedu.schoolshop.vo.store.HeaderStoreVo">
+            SELECT h.merchant_id,h.show_img,h.show_message_top,h.show_message_bottom,h.show_tag,
+                m.store_name
+            FROM header_store h
+            LEFT JOIN merchant m on h.merchant_id = m.id
+            where h.state=1
+    </select>
+</mapper>

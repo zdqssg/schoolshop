@@ -1,0 +1,199 @@
+
+#priceChoose #debt-amount-slider {
+    display: flex;
+    flex-direction: row;
+    align-content: stretch;
+    position: relative;
+    width: 100%;
+    height: 50px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#priceChoose #debt-amount-slider:before {
+    content: " ";
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    background: #000;
+}
+#priceChoose #debt-amount-slider input, form #debt-amount-slider label {
+    box-sizing: border-box;
+    flex: 1;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+#priceChoose  #debt-amount-slider label {
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#priceChoose  #debt-amount-slider label:nth-child(2) {
+    left: 0%;
+}
+#priceChoose  #debt-amount-slider label:nth-child(4) {
+    left: 20%;
+}
+#priceChoose  #debt-amount-slider label:nth-child(6) {
+    left: 40%;
+}
+#priceChoose  #debt-amount-slider label:nth-child(8) {
+    left: 60%;
+}
+#priceChoose #debt-amount-slider label:nth-child(10) {
+    left: 80%;
+}
+#priceChoose #debt-amount-slider label:before {
+    content: attr(data-debt-amount);
+    position: absolute;
+    left: 50%;
+    padding-top: 10px;
+    -webkit-transform: translate(-50%, 45px);
+    transform: translate(-50%, 45px);
+    font-size: 6px;
+    letter-spacing: 0.4px;
+    font-weight: 400;
+    white-space: nowrap;
+    opacity: 0.85;
+    transition: all 0.15s ease-in-out;
+}
+#priceChoose  #debt-amount-slider label:after {
+    content: " ";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border: 2px solid #000;
+    background: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 1;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+#priceChoose #debt-amount-slider label:hover:after {
+    -webkit-transform: translate(-50%, -50%) scale(1.25);
+    transform: translate(-50%, -50%) scale(1.25);
+}
+#priceChoose #debt-amount-slider input {
+    opacity: 0;
+    pointer-events: none;
+}
+#priceChoose #debt-amount-slider input:checked + label:before {
+    font-weight: 800;
+    opacity: 1;
+}
+#priceChoose  #debt-amount-slider input:checked + label:after {
+    border-width: 4px;
+    -webkit-transform: translate(-50%, -50%) scale(0.75);
+    transform: translate(-50%, -50%) scale(0.75);
+}
+#priceChoose  #debt-amount-slider input:checked ~ #debt-amount-pos {
+    opacity: 1;
+}
+#priceChoose #debt-amount-slider input:checked:nth-child(1) ~ #debt-amount-pos {
+    left: 10%;
+}
+#priceChoose #debt-amount-slider input:checked:nth-child(3) ~ #debt-amount-pos {
+    left: 30%;
+}
+#priceChoose #debt-amount-slider input:checked:nth-child(5) ~ #debt-amount-pos {
+    left: 50%;
+}
+#priceChoose #debt-amount-slider input:checked:nth-child(7) ~ #debt-amount-pos {
+    left: 70%;
+}
+#priceChoose #debt-amount-slider input:checked:nth-child(9) ~ #debt-amount-pos {
+    left: 90%;
+}
+#priceChoose  #debt-amount-slider #debt-amount-pos {
+    display: block;
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    background: #000;
+    border-radius: 50%;
+    transition: all 0.15s ease-in-out;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border: 2px solid #fff;
+    opacity: 0;
+    z-index: 2;
+}
+
+/*按钮特效*/
+#priceChoose  button {
+    transition: all 0.15s ease-in-out;
+    display: block;
+    position: relative;
+    padding: 10px 30px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-family: inherit;
+    font-weight: 600;
+    margin: 30px auto 0;
+    background-color: #111;
+    color: #fff;
+    font-size: 24px;
+    background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+    background-size: 150%;
+    z-index: 1;
+    animation: glow 8s linear infinite;
+    border-radius: 8px;
+    border: none;
+    outline: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+#priceChoose  button:before {
+    content: '';
+    position: absolute;
+    background: inherit;
+    top: -5px;
+    right: -5px;
+    bottom: -5px;
+    left: -5px;
+    border-radius: 30px;
+    filter: blur(15px);
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+#priceChoose  button:hover:before {
+    opacity: 1;
+    z-index: -1;
+}
+
+@keyframes glow {
+    0% {
+        background-position: 0%;
+    }
+
+    100% {
+        background-position: 400%;
+    }
+}

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.schoolshop.getway.mapper.GoodsAdvertisingMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.tedu.schoolshop.model.GoodsAdvertising">
+        <id column="id" property="id"/>
+        <result column="good_id" property="goodId"/>
+        <result column="state" property="state"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <resultMap id="GoodsAdvertisingVoResultMap" type="cn.tedu.schoolshop.vo.GoodsAdvertising.GoodsAdvertisingVo">
+        <id column="id" property="id"/>
+        <id column="good_id" property="goodId"/>
+        <id column="goods_name" property="goodsName"/>
+        <id column="goods_describe" property="goodsDescribe"/>
+        <id column="goods_img_path" property="goodsImgPath"/>
+        <id column="merchant_id" property="merchantId"/>
+        <id column="store_name" property="storeName"/>
+        <id column="category3Name" property="category3Name"/>
+        <id column="create_time" property="createTime"/>
+    </resultMap>
+    <sql id="selectBaseSql">
+        SELECT a.id,
+                   a.good_id,
+                   a.create_time,
+                   g.goods_name,
+                   g.goods_describe,
+                   g.goods_img_path,
+                   g.merchant_id,
+                   m.store_name,
+                   c.name category3Name
+            FROM goods_advertising a
+                     LEFT JOIN goods g on a.good_id = g.id
+                     LEFT JOIN merchant m on g.merchant_id = m.id
+                     LEFT JOIN category3 c on g.category3_id = c.id
+            WHERE a.state = 1
+            AND g.goods_state = 1
+            AND g.goods_repertory > 0
+
+    </sql>
+    <select id="selectPageHelper" resultMap="GoodsAdvertisingVoResultMap">
+        <include refid="selectBaseSql"/>
+        ORDER BY a.create_time DESC
+    </select>
+    <select id="findOne" parameterType="java.lang.Integer" resultMap="GoodsAdvertisingVoResultMap">
+        <include refid="selectBaseSql"/>
+        AND a.id=#{advertisingID}
+    </select>
+    <select id="selectLimit" parameterType="java.lang.Integer" resultMap="GoodsAdvertisingVoResultMap">
+        <include refid="selectBaseSql"/>
+        ORDER BY a.create_time DESC
+        LIMIT #{pageNum},5
+    </select>
+    <select id="selectByMerchantId" parameterType="java.lang.Integer" resultMap="GoodsAdvertisingVoResultMap">
+        <include refid="selectBaseSql"/>
+        AND g.merchant_id=#{merchantId}
+        ORDER BY a.create_time DESC
+    </select>
+</mapper>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zn_CN" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>商品详情详情</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="/JqeryKJ/merchantAdmin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/JqeryKJ/merchantAdmin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="/JqeryKJ/merchantAdmin/css/animate.css" rel="stylesheet">
+    <link href="/JqeryKJ/merchantAdmin/css/style.css?v=4.1.0" rel="stylesheet">
+</head>
+<body class="gray-bg">
+<div th:text="${goodId}" id="goodId" hidden></div>
+<div class="row" id="goodDetailApp">
+    <div class="col-sm-12">
+        <div class="wrapper wrapper-content animated fadeInUp">
+            <div class="ibox">
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="m-b-md">
+                                <button class="btn btn-warning btn-circle pull-right"
+                                        @click="deleteGood()"><i class="fa fa-times"></i></button>
+                                <h2 v-text="good.list.goodsName"></h2>
+                            </div>
+                            <dl class="dl-horizontal">
+                                <div class="col-sm-8">
+                                    <div class="col-sm-12" style="position: relative">
+                                        <img :src="good.list.goodsImgPath" style="width: 200px;height: 200px" alt="12">
+                                        <input @change="getFile()" id="goodBaseImgFile" type="file"
+                                               style="position: absolute;
+                                               width: 200px;
+                                               height: 200px;
+                                               display: inline-block;
+                                               top: 0;left: 0;opacity: 0"
+                                               allowexts="gif,jpeg,jpg,png,bmp" accept="image/*">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-sm-4">
+                                    <div>
+                                        <span>
+                                            <span>状态:</span>
+                                            <span :class="{'btn-danger':good.list.goodsState>=2}"
+                                                  v-text="goodState.text[good.list.goodsState]"></span>
+                                            <i v-if="good.list.goodsState==2" class="fa fa-warning"></i>
+                                        </span>
+                                        <button class="btn btn-sm btn-white pull-right"
+                                                v-if="good.list.goodsState<2"
+                                                @click="changeGoodStateBtn()">修改状态
+                                        </button>
+                                        <button class="btn btn-sm btn-white pull-right"
+                                                v-else="good.list.goodsState==2"
+                                                @click="sendRecoverRequest()">发起恢复请求
+                                        </button>
+                                    </div>
+                                    <div v-if="goodState.show">
+                                        <div>
+                                            <span v-text="goodState.msg"></span>
+                                            <select class="form-control btn-sm"
+                                                    v-model="goodState.value">
+                                                <option v-for="(s,index) in goodState.option"
+                                                        :value="index"
+                                                        v-text="s">
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <span class="btn btn-sm pull-left btn-success"
+                                                  @click="confirmChangeGoodState()">确定</span>
+                                            <span class="btn btn-sm pull-right btn-danger"
+                                                  @click="changeGoodStateBtn()">取消</span>
+                                        </div>
+                                    </div>
+                                    <br> <br> <br> <br>
+                                    <p>
+                                        <button @click="aKeyToCreate(good.list.id)" type="button" class="btn btn-block btn-outline btn-primary">一键创建广告</button>
+                                    </p>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <dl class="">
+                                <dd>名称:<input type="text"
+                                              @click="changeInfo"
+                                              v-model="good.list.goodsName"
+                                              minlength="3"
+                                              maxlength="100"
+                                              :title="good.list.goodsName"></dd>
+                                <dd>描述:<input type="text"
+                                              @click="changeInfo"
+                                              v-model="good.list.goodsDescribe"
+                                              minlength="2"
+                                              maxlength="50"></dd>
+                                <dd>价格:<input type="number"
+                                              @click="changeInfo"
+                                              pattern="/^\d+(\.{0,1}\d+){0,1}$/"
+                                              maxlength="10"
+                                              v-model="good.list.goodsPrice"></dd>
+                                <dd>库存:<input type="number"
+                                              @click="changeInfo"
+                                              pattern="/^\d+(\.{0,1}\d+){0,1}$/"
+                                              maxlength="10"
+                                              v-model="good.list.goodsRepertory"></dd>
+                                <dd>打折:<input type="checkbox"
+                                              @click="changeInfo"
+                                              v-model="good.list.isDiscount"></dd>
+                                <dd>最后更新: <span v-text="good.list.updateTime"></span></dd>
+                                <dd class="text-center"  v-if="updateInfo.show">
+                                    <span class="btn btn-warning" v-text="updateInfo.msg"></span>
+                                    <br>
+                                    <span class="btn btn-outline btn-success"
+                                          @click="saveInfo">修改</span></dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-6" id="cluster_info">
+                            <dl class="">
+                                <dd>好评率:<span v-text="good.list.rate+'%'"></span></dd>
+                                <dd>出售量:<span v-text="good.list.goodsSale"></span></dd>
+                                <dd>浏览次数:<span v-text="good.list.goodsClickCount"></span></dd>
+                                <dd>收藏次数:<span v-text="good.list.goodsLikeCount"></span></dd>
+                                <dd>添加购物车次数:<span v-text="good.list.goodsAddCart"></span></dd>
+                                <dd>支付次数:<span v-text="good.list.goodsPayCount"></span></dd>
+                                <dd>创建于:<span v-text="good.list.createTime"></span></dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <dl class="dl-horizontal">
+                                <dt>当前售卖进度</dt>
+                                <dd>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped active m-b-sm" :style="styleSale">
+                                            <span v-text="styleSale.width"></span>
+                                        </div>
+                                        <div class="progress-bar progress-bar-warning" :style="styleNoSale">
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="row m-t-sm">
+                        <div class="col-sm-12">
+                            <div class="panel blank-panel">
+                                <div class="panel-heading">
+                                    <div class="panel-options">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active">
+                                                <a data-toggle="tab" aria-expanded="true">商品评论</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="commentApp">
+                                            <div class="feed-activity-list" v-if="good.list.comment.length==0">
+                                                <div class="feed-element">
+                                                    <div class="media-body ">
+                                                        <div class="well">暂无用户评价</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="feed-activity-list" v-else>
+                                                <!--分页结果-->
+                                                <div class="feed-element">
+                                                    <div class="pull-right">
+                                                        当前第<span v-text="good.pageNum"></span>页,
+                                                        共<span v-text="good.pages"></span>页,
+                                                        共 <span v-text="good.total"></span>条评论
+                                                    </div>
+                                                </div>
+                                                <!--评论列表-->
+                                                <div class="feed-element" v-for="(c,index) in good.list.comment">
+                                                    <a class="pull-left">
+                                                        <img alt="image" class="img-circle" :src="c.user.headPhoto">
+                                                    </a>
+                                                    <div class="media-body ">
+                                                        <small class="pull-right" v-text="c.createTime">评论时间</small>
+                                                        <strong v-text="c.user.nickname">用户名</strong>
+                                                        <br>
+                                                        <div class="well" v-text="c.comment">评论内容</div>
+                                                        <small>评级:
+                                                            <span class="btn  btn-circle "
+                                                                  :class="{'btn-danger':c.level<3,'btn-success':c.level>=3}"
+                                                                  v-for="l in c.level">
+                                                                <i class="fa fa-star"></i>
+                                                            </span>
+                                                            <span class="btn btn-white btn-circle "
+                                                                  v-for="l in 5-c.level">
+                                                                <i class="fa fa-star"></i>
+                                                            </span>
+                                                        </small>
+                                                        <div class="pull-right">
+                                                            <a class="btn btn-xs btn-white"
+                                                               @click="giveALike(c.id,index)">
+                                                                <i class="fa fa-thumbs-up"></i>
+                                                                <span v-text="'赞: '+c.approval"></span></a>
+                                                            <a class="btn btn-xs btn-primary" @click="newForOld">
+                                                                <i class="fa fa-pencil"></i> 评论</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--分页开始-->
+                                                <div class="text-center">
+                                                    <button @click="loadGoodDetail(1)" type="button"
+                                                            class="btn btn-white">
+                                                        首页
+                                                    </button>
+                                                    <button @click="loadGoodDetail((good.hasPreviousPage?good.prePage:1))"
+                                                            type="button" class="btn btn-white">
+                                                        <i class="fa fa-chevron-left"></i>
+                                                    </button>
+                                                    <button v-for="(n,index) in good.navigatepageNums"
+                                                            @click="loadGoodDetail(n)"
+                                                            class="btn btn-white"
+                                                            :class="{active:index+1==good.pageNum}"
+                                                            v-text="n">1
+                                                    </button>
+                                                    <button @click="loadGoodDetail((good.hasNextPage?good.nextPage:good.pages))"
+                                                            type="button" class="btn btn-white">
+                                                        <i class="fa fa-chevron-right"></i>
+                                                    </button>
+                                                    <button @click="loadGoodDetail(good.pages)" type="button"
+                                                            class="btn btn-white">
+                                                        尾页
+                                                    </button>
+                                                </div>
+                                                <!--分页结束-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="/JqeryKJ/merchantAdmin/js/jquery.min.js?v=2.1.4"></script>
+<script src="/JqeryKJ/merchantAdmin/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+<script src="/js/commons/getTime.js"></script>
+
+<!-- 自定义js -->
+<script src="/JqeryKJ/merchantAdmin/js/content.js?v=1.0.0"></script>
+
+<script src="/js/merchant/goodDetails.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#loading-example-btn').click(function () {
+            btn = $(this);
+            simpleLoad(btn, true)
+
+            // Ajax example
+            //                $.ajax().always(function () {
+            //                    simpleLoad($(this), false)
+            //                });
+
+            simpleLoad(btn, false)
+        });
+    });
+
+    function simpleLoad(btn, state) {
+        if (state) {
+            btn.children().addClass('fa-spin');
+            btn.contents().last().replaceWith(" Loading");
+        } else {
+            setTimeout(function () {
+                btn.children().removeClass('fa-spin');
+                btn.contents().last().replaceWith(" Refresh");
+            }, 2000);
+        }
+    }
+</script>
+
+
+</body>
+
+</html>

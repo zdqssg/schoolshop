@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zn_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/JqeryKJ/merchantAdmin/favicon.ico">
+    <link href="/JqeryKJ/merchantAdmin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/JqeryKJ/merchantAdmin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <!--    footable-->
+    <link href="/JqeryKJ/merchantAdmin/css/plugins/footable/footable.core.css" rel="stylesheet">
+
+    <link href="/JqeryKJ/merchantAdmin/css/animate.css" rel="stylesheet">
+    <link href="/JqeryKJ/merchantAdmin/css/style.css?v=4.1.0" rel="stylesheet">
+</head>
+<body class="gray-bg">
+<div  class="wrapper wrapper-content animated fadeInRight">
+    <div class="row" id="infoApp">
+        <div class="col-sm-4 col-sm-offset-4">
+            <div>
+               设置店铺头像 <img :src="info.storeHeadPhoto" alt="">
+                <input type="file" id="storeHeadPhoto" @change="upload"
+                       allowexts="gif,jpeg,jpg,png,bmp" accept="image/*" required="required">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="/JqeryKJ/merchantAdmin/js/jquery.min.js?v=2.1.4"></script>
+<script src="/JqeryKJ/merchantAdmin/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/JqeryKJ/merchantAdmin/js/plugins/footable/footable.all.min.js"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+<script src="/js/commons/getTime.js"></script>
+
+<!-- 自定义js -->
+<script src="/JqeryKJ/merchantAdmin/js/content.js?v=1.0.0"></script>
+
+
+<script src="/js/merchant/info.js"></script>
+</body>
+</html>

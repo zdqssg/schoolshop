@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.schoolshop.api.user.mapper.GoodsCommentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.tedu.schoolshop.model.GoodsComment">
+        <id column="id" property="id"/>
+        <result column="level" property="level"/>
+        <result column="comment" property="comment"/>
+        <result column="approval" property="approval"/>
+        <result column="state" property="state"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="user_id" property="userId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <resultMap id="UserGoodsCommentResultMap" type="cn.tedu.schoolshop.vo.goodsComment.UserGoodsCommentVo">
+        <id column="id" property="id"/>
+        <result column="level" property="level"/>
+        <result column="comment" property="comment"/>
+        <result column="approval" property="approval"/>
+        <result column="create_time" property="createTime"/>
+        <association property="good" javaType="cn.tedu.schoolshop.vo.goods.GoodsShowVo">
+            <id column="goodsId" property="id"/>
+            <result column="goods_name" property="goodsName"/>
+            <result column="goods_price" property="goodsPrice"/>
+            <result column="goods_describe" property="goodsDescribe"/>
+            <result column="goods_img_path" property="goodsImgPath"/>
+            <result column="star_level" property="starLevel"/>
+            <result column="merchant_id" property="merchantId"/>
+        </association>
+    </resultMap>
+    <sql id="BaseSql">
+        id,level,comment,approval,state,goods_id,user_id,create_time,update_time
+    </sql>
+    <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="UserGoodsCommentResultMap">
+        SELECT c.id,c.comment,c.approval,c.create_time,c.level,g.id goodsId,g.goods_name,g.goods_img_path,g.merchant_id
+        FROM goods_comment c
+        LEFT JOIN goods g
+            ON c.goods_id = g.id
+        WHERE c.user_id=#{userId}
+        AND state!=0
+    </select>
+
+</mapper>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zn_CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="M_Adnan">
+    <title>你没有权限访问</title>
+
+    <!--网页图标-->
+    <link rel="shortcut icon" th:href="@{/img/schoolshop/shcool.png}">
+    <!-- 幻灯片效果插件SLIDER REVOLUTION 4.x CSS SETTINGS -->
+    <link rel="stylesheet" th:href="@{/rs-plugin/css/settings.css}" media="screen"/>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" th:href="@{/bootstrap3/css/bootstrap.css}">
+    <!-- 定制的 CSS -->
+    <link rel="stylesheet" th:href="@{/bootstrap3/font-awesome/css/font-awesome.min.css}">
+    <link th:href="@{/css/schoolshop/ionicons.min.css}" rel="stylesheet">
+    <link th:href="@{/css/schoolshop/main.css}" rel="stylesheet">
+    <link th:href="@{/css/schoolshop/style.css}" rel="stylesheet">
+    <link th:href="@{/css/schoolshop/responsive.css}" rel="stylesheet">
+    <!-- JavaScripts -->
+    <script th:src="@{/js/schoolshop/modernizr.js}"></script>
+    <!-- Online Fonts -->
+    <link th:href='@{/css/googleapis/familyMontserrat.css}' rel='stylesheet' type='text/css'>
+    <link th:href='@{/css/googleapis/familyPlayfaiDisplay.css}' rel='stylesheet' type='text/css'>
+
+    <!--IE8以下的浏览器支持方案-->
+    <!--[if lt IE 9]>
+    <script th:src="@{/js/html5shiv.js}"></script>
+    <script th:src="@{/js/respond.min.js}"></script>
+    <![endif]-->
+
+</head>
+<body>
+
+<!-- 加载动画 -->
+<div th:replace="~{commons :: loader}"></div>
+<!-- 容器 -->
+<div id="wrap">
+    <!-- 导航 -->
+    <header>
+        <div class="sticky">
+            <div class="container">
+                <!-- schoolshop-logo -->
+                <div th:replace="~{commons :: schoolshop-logo}"></div>
+                <nav class="navbar ownmenu">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#nav-open-btn" aria-expanded="false">
+                            <span class="sr-only">切换导航</span>
+                            <span class="icon-bar"><i class="fa fa-navicon"></i></span></button>
+                    </div>
+                    <!-- schoolshop-nav-left -->
+                    <div th:replace="~{commons :: schoolshop-nav-left}"></div>
+                    <!-- nav-right -->
+                    <div th:replace="~{commons :: nav-right}"></div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- 内容 -->
+    <div id="content">
+
+        <!-- 精品推荐 -->
+        <section class="padding-top-200 padding-bottom-200">
+            <div class="container">
+
+                <!-- 主标题 -->
+                <div class="heading text-center">
+                    <h2>对不起，您你没有权限访问</h2>
+                    <h2><a href="javascript:history.back(-1)">返回上一页</a></h2>
+                    <span><a href="#.">升级会员?</a></span></div>
+            </div>
+        </section>
+
+
+        <!-- 关于我们 -->
+        <section th:replace="~{commons :: aboutUs}"></section>
+    </div>
+
+    <!--======= 底部 =========-->
+    <footer th:replace="~{commons :: footer}"></footer>
+</div>
+
+
+<script th:src="@{/js/jquery-1.10.2.min.js}"></script>
+<script th:src="@{/js/schoolshop/bootstrap.min.js}"></script>
+<script th:src="@{/js/schoolshop/own-menu.js}"></script>
+<script th:src="@{/js/schoolshop/jquery.lighter.js}"></script>
+<script th:src="@{/js/schoolshop/owl.carousel.min.js}"></script>
+<!-- 轮播图效果插件SLIDER REVOLUTION 4.x SCRIPTS  -->
+<script th:src="@{/rs-plugin/js/jquery.tp.t.min.js}"></script>
+<script th:src="@{/rs-plugin/js/jquery.tp.min.js}"></script>
+<script th:src="@{/js/schoolshop/main.js}"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+<!--自定义js-->
+<!--头部-->
+<script src="/js/schoolshop/homeHeader.js"></script>
+<script src="/js/schoolshop/userHeader.js"></script>
+
+</body>
+</html>

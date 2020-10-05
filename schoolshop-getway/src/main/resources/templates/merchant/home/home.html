@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--360浏览器优先以webkit内核解析-->
+    <title> - 主页示例</title>
+    <link rel="shortcut icon" href="/JqeryKJ/merchantAdmin/favicon.ico">
+    <link href="/JqeryKJ/merchantAdmin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/JqeryKJ/merchantAdmin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="/JqeryKJ/merchantAdmin/css/animate.css" rel="stylesheet">
+    <link href="/JqeryKJ/merchantAdmin/css/style.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="row row-sm text-center" id="v-number">
+                        <div class="col-xs-6">
+                            <div class="panel padder-v item">
+                                <div class="h1 text-info font-thin h1">{{orderNumber}}</div>
+                                <span class="text-muted text-xs">总订单量</span>
+                                <div class="top text-right w-full">
+                                    <i class="fa fa-caret-down text-warning m-r-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="panel padder-v item bg-info">
+                                <div class="h1 text-fff font-thin h1">{{visitNumber}}</div>
+                                <span class="text-muted text-xs">总访问量</span>
+                                <div class="top text-right w-full">
+                                    <i class="fa fa-caret-down text-warning m-r-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="panel padder-v item bg-primary">
+                                <div class="h1 text-fff font-thin h1">{{likeNumber}}</div>
+                                <span class="text-muted text-xs">收藏用户</span>
+                                <div class="top text-right w-full">
+                                    <i class="fa fa-caret-down text-warning m-r-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="panel padder-v item">
+                                <div class="font-thin h1">{{incomeNumber}}</div>
+                                <span class="text-muted text-xs">总收入</span>
+                                <div class="bottom text-left">
+                                    <i class="fa fa-caret-up text-warning m-l-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title" style="border-bottom:none;background:#fff;">
+                            <h5>服务器状态</h5>
+                        </div>
+                        <div class="ibox-content" style="border-top:none;">
+                            <div id="flot-line-chart-moving" style="height:217px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-9" style="padding-right:0;">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title" style="border-bottom:none;background:#fff;">
+                            <h5>各项数据数据</h5>
+                        </div>
+                        <div class="ibox-content" style="border-top:none;">
+                            <div id="yesterday" style="height:217px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3" style="padding-left:0;">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content" style="border-top:none;background-color:#e4eaec;">
+                            <h5>新增收藏</h5>
+                            <div class="progress progress-striped active">
+                                <div style="width: 75%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="75"
+                                     role="progressbar" class="progress-bar">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </div>
+                            <h5>流失顾客</h5>
+                            <div class="progress progress-striped active">
+                                <div style="width: 75%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="75"
+                                     role="progressbar" class="progress-bar progress-bar-warning">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </div>
+                            <h5>新增访问</h5>
+                            <div class="progress progress-striped active">
+                                <div style="width: 75%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="75"
+                                     role="progressbar" class="progress-bar .progress-bar-danger">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </div>
+                            <h5>新增玩家</h5>
+                            <div class="progress progress-striped active">
+                                <div style="width: 75%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="75"
+                                     role="progressbar" class="progress-bar progress-bar-info">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="/JqeryKJ/merchantAdmin/js/jquery.min.js?v=2.1.4"></script>
+<script src="/JqeryKJ/merchantAdmin/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/JqeryKJ/merchantAdmin/js/plugins/layer/layer.min.js"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+<script src="/js/commons/getTime.js"></script>
+
+<!-- Flot -->
+<script src="/JqeryKJ/merchantAdmin/js/plugins/flot/jquery.flot.js"></script>
+<script src="/JqeryKJ/merchantAdmin/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+<script src="/JqeryKJ/merchantAdmin/js/plugins/flot/jquery.flot.resize.js"></script>
+<script src="/JqeryKJ/merchantAdmin/js/plugins/flot/jquery.flot.pie.js"></script>
+<!-- 自定义js -->
+<script src="/JqeryKJ/merchantAdmin/js/content.js"></script>
+<!--flotdemo-->
+<script src="/js/merchant/yesterday.js"></script>
+<script src="/js/merchant/flot.line.chart.moving.js"></script>
+
+<script src="/js/merchant/home.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zn_CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="M_Adnan">
+    <title>物流</title>
+    <!--网页图标-->
+    <link th:href="@{/img/schoolshop/shcool.png}" rel="shortcut icon">
+    <!-- Bootstrap Core CSS -->
+    <link th:href="@{/bootstrap3/css/bootstrap.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/bootstrap3/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/person/assets/css/admin.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/amazeui.css}" rel="stylesheet" type="text/css"/>
+
+    <link th:href="@{/css/person/personal.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/person/lostyle.css}" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+<!--内容-->
+<div class="center">
+    <div class="col-main">
+        <div class="main-wrap">
+            <div class="user-logistics">
+                <!--标题 -->
+                <div class="am-cf am-padding">
+                    <div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">物流跟踪</strong> / <small>Logistics&nbsp;History</small>
+                    </div>
+                </div>
+                <hr/>
+                <div class="package-title">
+                    <div class="m-item">
+                        <div class="item-pic">
+                            <img src="/resource/2020/09/0-item_pic.jpg_220x220.jpg" class="itempic J_ItemImg">
+                        </div>
+                        <div class="item-info">
+                            <p class="log-status">物流状态:<span>已签收</span></p>
+                            <p>承运公司：天天物流</p>
+                            <p>快递单号：373269427868</p>
+                            <p>官方电话：4001-888-888</p>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="package-status">
+                    <ul class="status-list">
+                        <li class="latest">
+                            <p class="text">【武汉市】已签收,签收人是青年城签收，感谢使用天天快递，期待再次为您服务</p>
+                            <div class="time-list">
+                                <span class="date">2015-12-19</span><span class="week">周六</span><span class="time">15:35:42</span>
+                            </div>
+                        </li>
+                        <li>
+                            <p class="text">【武汉市】光谷关山分部派件员正在为您派件</p>
+                            <div class="time-list">
+                                <span class="date hidden">2015-12-19</span><span class="week hidden">周六</span><span
+                                    class="time">14:27:28</span>
+                            </div>
+                        </li>
+                        <li>
+                            <p class="text">【武汉市】快件已到达 光谷关山分部</p>
+                            <div class="time-list">
+                                <span class="date hidden">2015-12-19</span><span class="week hidden">周六</span><span
+                                    class="time">09:25:51</span>
+                            </div>
+                        </li>
+                        <li>
+                            <p class="text">【武汉市】武汉 已发出</p>
+                            <div class="time-list">
+                                <span class="date  hidden">2015-12-19</span><span class="week  hidden">周六</span><span
+                                    class="time">06:56:03</span>
+                            </div>
+                        </li>
+                        <li>
+                            <p class="text">【杭州市】杭州集散陆运 已发出</P>
+                            <div class="time-list">
+                                <span class="date">2015-12-17</span><span class="week">周四</span><span class="time">22:15:23</span>
+                            </div>
+                        </li>
+                        <li>
+                            <p class="text">【绍兴市】诸暨 已发出</p>
+                            <div class="time-list">
+                                <span class="date hidden">2015-12-17</span><span class="week hidden">周四</span><span
+                                    class="time">18:55:25</span>
+                            </div>
+                        </li>
+                        <li>
+                            <p class="text">【绍兴市】天天快递 诸暨收件员 已揽件</span>
+                            <div class="time-list">
+                                <span class="date hidden">2015-12-17</span><span class="week hidden">周四</span><span
+                                    class="time">18:54:25</span>
+                            </div>
+                        </li>
+                        <li>
+                            <p class="text">商家正通知快递公司揽件</span>
+                            <div class="time-list">
+                                <span class="date hidden">2015-12-17</span><span class="week hidden">周四</span><span
+                                    class="time">15:49:40</span>
+                            </div>
+                        </li>
+                        <li>
+                            <p class="text">您的包裹已出库</span>
+                            <div class="time-list">
+                                <span class="date hidden">2015-12-17</span><span class="week hidden">周四</span><span
+                                    class="time">15:49:40</span>
+                            </div>
+                        </li>
+                        <li>
+                            <p class="text">您的订单待配货</p>
+                            <div class="time-list">
+                                <span class="date hidden">2015-12-17</span><span class="week hidden">周四</span><span
+                                    class="time">15:18:15</span>
+                            </div>
+                        </li>
+                        <li class="first">
+                            <p class="text">您的订单开始处理</p>
+                            <div class="time-list">
+                                <span class="date  hidden">2015-12-17</span><span class="week  hidden">周四</span><span
+                                    class="time">14:27:50</span>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <aside th:replace="~{commons :: aside}"></aside>
+</div>
+<script th:src="@{/js/jquery-1.10.2.min.js}"></script>
+<script th:src="@{/js/schoolshop/bootstrap.min.js}"></script>
+<script th:src="@{/js/vue.js}"></script>
+<!--用户页面必要js-->
+<script th:src="@{/js/amazeui.min.js}"></script>
+<script src="/js/person/main.js"></script>
+</body>
+
+</html>

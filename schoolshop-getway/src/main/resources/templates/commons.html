@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zn_CN">
+<!--/*@thymesVar id="headerClass" type="cn.tedu.schoolshop.vo.Category1Vo"*/-->
+<!-- 加载动画 -->
+<div id="loader" th:fragment="loader">
+    <div class="position-center-center">
+        <div class="ldr"></div>
+    </div>
+</div>
+<!-- Logo -->
+<div class="logo" th:fragment="schoolshop-logo">
+    <a href="/home/">
+        <img style="height: 50px" class="img-responsive" src="/img/283322615766085.png" alt="">
+    </a>
+</div>
+<!-- schoolshop导航-->
+<div class="collapse navbar-collapse" th:fragment="schoolshop-nav-left" id="nav-open-btn">
+    <ul class="nav" id="schoolshopNavApp">
+        <li class="dropdown active">
+            <a href="/home/" class="dropdown-toggle">首页</a>
+        </li>
+        <li class="dropdown"><a href="#." class="dropdown-toggle" data-toggle="dropdown">商品分类</a>
+            <ul class="dropdown-menu">
+                <li v-for="c in category1List">
+                    <a :href="'/home/searchCategory/'+c.id">
+                        <span v-text="c.name"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- 精选热搜 -->
+        <li class="dropdown">
+            <a href="#." class="dropdown-toggle" data-toggle="dropdown">精选热搜</a>
+            <div class="dropdown-menu two-option">
+                <div class="row">
+                    <ul class="col-sm-6">
+                        <li v-for="s in goods1">
+                            <a :href="'/home/searchMsg/'+s.msg" v-text="s.msg"></a></li>
+                    </ul>
+                    <ul class="col-sm-6">
+                        <li v-for="s in goods2">
+                            <a :href="'/home/searchMsg/'+s.msg" v-text="s.msg"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+        <!-- 推荐 -->
+        <li class="dropdown megamenu">
+            <a href="#." class="dropdown-toggle" data-toggle="dropdown">推荐店铺</a>
+            <div class="dropdown-menu">
+                <div class="row">
+                    <!-- 推荐店铺们 -->
+                    <div class="col-md-3">
+                        <h6>推荐店铺</h6>
+                        <ul>
+                            <li v-for="s in stores">
+                                <a :href="'/store/'+s.merchantId" target="_blank"><span
+                                        v-text="s.storeName"></span></a></li>
+                        </ul>
+                    </div>
+                    <!-- 推荐商品 -->
+                    <div class="col-md-4">
+                        <h6>推荐商品</h6>
+                        <div class="top-rated">
+                            <ul>
+                                <li v-for="g in Goods" @click="clickGoods(g.merchantId,g.id)">
+                                    <div class="media-left">
+                                        <div class="cart-img">
+                                            <img class="media-object img-responsive" :src="g.goodsImgPath">
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6 class="media-heading" v-text="g.goodsName"></h6>
+                                        <div class="stars">
+                                            <i class="fa fa-star" v-for="item of g.starLevel" :key="item"></i>
+                                        </div>
+                                        <span class="price" v-text="g.goodsPrice+'RMB'"></span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- 头条 -->
+                    <div class="col-md-5">
+                        <div v-for="s in store">
+                            <h5><span v-text="s.showTag"></span>
+                                <span v-text="'(最佳店铺)'+s.storeName"></span>
+                            </h5>
+                            <img class="nav-img" :src="s.showImg">
+                            <p><span
+                                    v-text="s.showMessageTop"></span><br>
+                                <span v-text="s.showMessageBottom"></span>
+                            </p>
+                            <a :href="'/store/'+s.merchantId"
+                               class="btn btn-small btn-round">去店铺逛逛</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li><a href="/home/contact">反馈建议</a></li>
+        <li><a href="/merchant/none/register">成为商家</a></li>
+        <li><a href="/home/aboutUs">关于我们</a></li>
+    </ul>
+</div>
+<!--store Logo -->
+<div class="logo" th:fragment="store-logo" id="storeLogoApp">
+    <a :href="'/store/'+store.id">
+        <img style="width: 50px" :src="store.storeHeadPhoto" class="img-responsive" alt="店铺头像"></a>
+    <a :href="'/store/'+store.id" class="dropdown-toggle">店铺: <span v-text="store.storeName"></span></a>
+</div>
+<!-- store导航 -->
+<div class="collapse navbar-collapse" th:fragment="store-nav-left" id="nav-open-btn">
+    <ul class="nav" id="storeNavApp">
+        <li class="dropdown active">
+            <a href="/home/" class="dropdown-toggle">校购首页</a>
+        </li>
+        <!--店铺商品分类-->
+        <li class="dropdown"><a href="#." class="dropdown-toggle" data-toggle="dropdown">店铺商品</a>
+            <ul class="dropdown-menu">
+                <li v-for="c in category3">
+                    <a :href="'/store/'+store.id+'/goods/'+store.category1Id+','+store.category2Id+','+c.id"
+                       v-text="c.name">分类名</a></li>
+            </ul>
+        </li>
+        <!-- 店铺热卖 -->
+        <li class="dropdown">
+            <a href="#." class="dropdown-toggle" data-toggle="dropdown">店铺热卖</a>
+            <div class="dropdown-menu two-option">
+                <div class="row">
+                    <ul class="col-sm-12">
+                        <li v-if="headerHotGoods.length>0" v-for="h in headerHotGoods"><a
+                                :href="'/store/'+store.id+'/good/'+h.id">[<span class="bg-danger">热卖</span>]<span
+                                v-text="h.goodsName"></span></a></li>
+                        <li v-else><a class="bg-warning">商家未发布商品</a></li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+        <li><a href="#.">联系商家</a></li>
+        <li><a href="/merchant/none/register">成为商家</a></li>
+    </ul>
+</div>
+<!-- 导航右侧-->
+<div class="nav-right" th:fragment="nav-right">
+    <ul class="navbar-right" id="navRightApp">
+        <!-- 用户信息 -->
+        <li class="dropdown user-acc">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+               role="button"><i class="icon-user"></i> </a>
+            <ul v-if="user" class="dropdown-menu">
+                <!---->
+                <li><h6>你好！@{{nickname}}</h6></li>
+                <li><a href="/person/cart">我的购物车</a></li>
+                <li><a href="/person/index">账户详情</a></li>
+                <li><a href="/person/goOut">注销</a></li>
+            </ul>
+            <ul v-else class="dropdown-menu">
+                <!---->
+                <li><a href="/person/none/login">点击登录(免费注册)</a></li>
+            </ul>
+        </li>
+        <!-- 购物车 -->
+        <li class="dropdown user-basket">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+               role="button" aria-haspopup="true" aria-expanded="true"><i
+                    class="icon-basket-loaded"></i> </a>
+            <ul v-if="user" class="dropdown-menu">
+                <li v-for="c in carts">
+                    <div class="media-left">
+                        <div class="cart-img"><a href="#">
+                            <img class="media-object img-responsive"
+                                 :src="c.goodsImgPath">
+                        </a></div>
+                    </div>
+                    <div class="media-body">
+                        <h6 class="media-heading" v-text="c.goodsName"></h6>
+                        <span class="price" v-text="'单价:'+c.goodsPrice+'RMB'"></span>
+                        <span class="qty" v-text="'数量:'+c.number"></span></div>
+                </li>
+                <li class="margin-0">
+                    <div class="row">
+                        <div class="col-xs-12"><a href="/person/cart" class="btn">查看购物车</a></div>
+                    </div>
+                </li>
+            </ul>
+            <ul v-else class="dropdown-menu">
+                <li>
+                    <a href="/person/none/login" class="btn" @click="goToLogin()">
+                        <h5 class="text-center">登陆后显示简要购物车</h5>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- 搜索栏-->
+        <li class="dropdown"><a href="javascript:void(0);" class="search-open"><i
+                class=" icon-magnifier"></i></a>
+            <div class="search-inside animated bounceInUp"><i class="icon-close search-close"></i>
+                <div class="search-overlay"></div>
+                <div class="position-center-center">
+                    <div class="search">
+                        <form @submit.prevent="toShopWord()">
+                            <div class="form-inline">
+                                <label>
+                                    <input class="searchType radio-inline"
+                                           type="radio" name="type"
+                                           checked><span>商品</span></label>
+                                <label>
+                                    <input class="searchType radio-inline"
+                                           type="radio"
+                                           name="type"
+                                           disabled="disabled"><span>店铺</span></label>
+                            </div>
+
+                            <input type="search"
+                                   placeholder="输入搜索关键字"
+                                   required="required"
+                                   @input="sendMatching()"
+                                   v-model="search.msg"
+                                   maxlength="30">
+                            <button type="submit"><i class="icon-check"></i></button>
+                        </form>
+                        <div id="search-matching" :class="[search.isNone?'search-matching-isNone':'']">
+                            <ul>
+                                <li v-for="m in search.matchingArr" @click="toShopWordByMatching(m.goodsName)">
+                                    <span  v-html="m.newGoodsName"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<!--用户左边侧边栏-->
+<aside class="menu" th:fragment="aside" id="asideApp">
+    <ul>
+        <li class="person">
+            <a href="/home/">购物首页</a>
+        </li>
+        <li class="person "
+            v-for="(a,index) in aside"
+            v-html="a.html"
+            @click="singleCheck(index)"
+            :class="{'active':index==checked}"></li>
+
+    </ul>
+
+</aside>
+
+<!-- 关于我们 -->
+<section th:fragment="aboutUs" class="small-about padding-top-150 padding-bottom-150">
+    <div class="container">
+        <!-- 主题 -->
+        <div class="heading text-center">
+            <a href="/home/aboutUs"><h4 >关于我们</h4></a>
+            <p>爱是一种享受，是一种奉献。请大驾光临。</p>
+        </div>
+    </div>
+</section>
+
+<!--======= 底部 =========-->
+<footer th:fragment="footer">
+    <div class="container">
+        <!-- 联系方式 -->
+        <div class="col-md-3">
+            <div class="about-footer"><img class="margin-bottom-30" th:src="@{/img/283322615766085.png}" alt="">
+                <p><i class="icon-pointer"></i>安徽省合肥市</p>
+                <p><i class="icon-call-end"></i>110</p>
+                <p><i class="icon-envelope"></i>110@110.com</p>
+            </div>
+        </div>
+
+        <!-- 友情连接 -->
+        <div class="col-md-3">
+            <h6>友情连接</h6>
+            <ul class="link">
+                <li><a href="https://auth.alipay.com/" target="_blank">支付宝</a></li>
+                <li><a href="https://www.taobao.com/" target="_blank">淘宝</a></li>
+                <li><a href="https://lol.qq.com/" target="_blank">LOL</a></li>
+                <li><a href="https://store.steampowered.com/" target="_blank">STEAM</a></li>
+                <li><a href="https://weibo.com/" target="_blank">微博</a></li>
+                <li><a href="https://spring.io/" target="_blank">Spring</a></li>
+            </ul>
+        </div>
+
+        <!-- 购物 -->
+        <div class="col-md-3">
+            <h6>校园购物</h6>
+            <ul class="link">
+                <li><a href="/home/aboutUs">关于我们</a></li>
+                <li><a href="#.">生涯发展</a></li>
+                <li><a href="#.">运输方法</a></li>
+                <li><a href="#.">联系方式</a></li>
+                <li><a href="#.">帮助</a></li>
+                <li><a href="/admin/none/login">管理员</a></li>
+            </ul>
+        </div>
+
+        <!-- 我的帐号-->
+        <div class="col-md-3">
+            <h6>我的帐号</h6>
+            <ul class="link">
+                <li><a href="/person/none/login">登录</a></li>
+                <li><a href="/person/index">我的帐号</a></li>
+                <li><a href="/person/cart">购物车</a></li>
+                <li><a href="/person/order">我的订单</a></li>
+            </ul>
+        </div>
+
+        <!-- Rights -->
+
+        <div class="rights">
+            <p>Copyright ©校园购 2005号</p>
+            <div class="scroll"><a href="#wrap" class="go-up"><i class="fa fa-chevron-up"></i></a></div>
+        </div>
+    </div>
+</footer>
+<script src="/js/vue.js"></script>
+</html>

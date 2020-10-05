@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.schoolshop.api.merchant.mapper.UserOrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.tedu.schoolshop.model.UserOrder">
+        <id column="id" property="id"/>
+        <result column="state" property="state"/>
+        <result column="username" property="username"/>
+        <result column="phone" property="phone"/>
+        <result column="province_code" property="provinceCode"/>
+        <result column="city_code" property="cityCode"/>
+        <result column="area_code" property="areaCode"/>
+        <result column="street_code" property="streetCode"/>
+        <result column="detail" property="detail"/>
+        <result column="user_warn" property="userWarn"/>
+        <result column="cart_id" property="cartId"/>
+        <result column="user_id" property="userId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <resultMap id="UserOrderVoResultMap" type="cn.tedu.schoolshop.vo.order.UserOrderVo">
+        <id column="id" property="id"/>
+        <result column="state" property="state"/>
+        <result column="username" property="username"/>
+        <result column="phone" property="phone"/>
+        <result column="PROVINCE_NAME" property="provinceName"/>
+        <result column="CITY_NAME" property="cityName"/>
+        <result column="AREA_NAME" property="areaName"/>
+        <result column="STREET_NAME" property="streetName"/>
+        <result column="detail" property="detail"/>
+        <result column="user_warn" property="userWarn"/>
+        <result column="cart_id" property="cartId"/>
+        <result column="user_id" property="userId"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <select id="selectAllCount" resultMap="BaseResultMap">
+        SELECT * FROM user_order
+    </select>
+    <select id="selectById" parameterType="java.lang.Integer"
+            resultMap="UserOrderVoResultMap">
+        SELECT o.id,o.state,o.username,o.phone,o.detail,o.user_warn,o.cart_id,o.user_id,o.create_time,
+        bp.PROVINCE_NAME,bc.CITY_NAME,ba.AREA_NAME,bs.STREET_NAME
+        FROM user_order o
+        LEFT JOIN bs_province bp on o.province_code = bp.PROVINCE_CODE
+        LEFT JOIN bs_city bc on o.city_code = bc.CITY_CODE
+        LEFT JOIN bs_area ba on o.area_code = ba.AREA_CODE
+        LEFT JOIN bs_street bs on o.street_code = bs.STREET_CODE
+        WHERE o.id=#{orderId}
+    </select>
+</mapper>

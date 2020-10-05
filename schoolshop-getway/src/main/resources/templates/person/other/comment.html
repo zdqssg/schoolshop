@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zn_CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="M_Adnan">
+    <title>评价管理</title>
+    <!--网页图标-->
+    <link th:href="@{/img/schoolshop/shcool.png}" rel="shortcut icon">
+    <!-- Bootstrap Core CSS -->
+    <link th:href="@{/bootstrap3/css/bootstrap.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/bootstrap3/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/person/assets/css/admin.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/amazeui.css}" rel="stylesheet" type="text/css"/>
+
+    <link th:href="@{/css/person/personal.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/person/cmstyle.css}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<!--内容-->
+<div class="center">
+    <div class="col-main">
+        <div class="main-wrap">
+
+            <div class="user-comment">
+                <!--标题 -->
+                <div class="am-cf am-padding">
+                    <div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">评价管理</strong> / <small>Manage&nbsp;Comment</small>
+                    </div>
+                </div>
+                <hr/>
+
+                <div class="am-tabs am-tabs-d2 am-margin" data-am-tabs>
+
+                    <ul class="am-avg-sm-2 am-tabs-nav am-nav am-nav-tabs">
+                        <li class="am-active"><a href="#tab1">所有评价</a></li>
+                        <li><a href="#tab2" class="btn btn-default btn-lg disabled" role="button">有图评价</a></li>
+
+                    </ul>
+
+                    <div class="am-tabs-bd">
+                        <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+
+                            <div class="comment-main">
+                                <div class="comment-list" id="commentListApp">
+                                    <ul class="item-list" v-for="c in data.list"
+                                        @click="clickGood(c.good.merchantId,c.good.id)">
+                                        <div class="comment-top">
+                                            <div class="th th-price">
+                                                <td class="td-inner">评价</td>
+                                            </div>
+                                            <div class="th th-item">
+                                                <td class="td-inner">商品</td>
+                                            </div>
+                                        </div>
+                                        <li class="td td-item">
+                                            <div class="item-pic">
+                                                <img :src="c.good.goodsImgPath"
+                                                     class="itempic">
+                                            </div>
+                                        </li>
+                                        <li class="td td-comment">
+                                            <div class="item-title">
+                                                <div class="item-name text-center">
+                                                    <p class="item-basic-info" v-text="c.good.goodsName">美康粉黛醉美唇膏
+                                                        持久保湿滋润防水不掉色</p>
+                                                </div>
+                                            </div>
+                                            <div class="item-comment well" v-text="c.comment">
+                                                宝贝非常漂亮，超级喜欢！！！
+                                            </div>
+
+                                            <div class="item-info">
+                                                <div>
+                                                    <p class="info-time">好评2015-12-24</p>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                    <div class="row">
+                                        <div class="text-center view-text">
+                                            当前第<span v-text="data.pageNum"></span>页,
+                                            共<span v-text="data.pages"></span>页,
+                                            共 <span v-text="data.total"></span>条我的评论
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!--分页开始-->
+                                        <div class="text-center">
+                                        <button @click="load(1)"
+                                              class="btn btn-warning ">
+                                            首页
+                                        </button>
+                                            <button @click="load((data.hasPreviousPage?data.prePage:1))"
+                                                  class="btn btn-warning ">
+                                            <i class="fa fa-chevron-left"></i>
+                                         </button>
+                                            <button v-for="(n,index) in data.navigatepageNums"
+                                                  @click="load(n)"
+                                                  class="btn btn-warning "
+                                                  :class="{active:index+1==data.pageNum}"
+                                                  v-text="n">1
+                                          </button>
+                                            <button @click="load((data.hasNextPage?data.nextPage:data.pages))"
+                                                  class="btn btn-warning">
+                                           <i class="fa fa-chevron-right"></i>
+                                              </button>
+                                            <button @click="load(data.pages)"
+                                                  class="btn btn-warning">
+                                             尾页
+                                     </button>
+                                        </div>
+                                        <!--分页结束-->
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="am-tab-panel am-fade" id="tab2">
+
+                            <div class="comment-main">
+                                <div class="comment-list">
+                                    <ul class="item-list">
+
+
+                                        <div class="comment-top">
+                                            <div class="th th-price">
+                                                <td class="td-inner">评价</td>
+                                            </div>
+                                            <div class="th th-item">
+                                                <td class="td-inner">商品</td>
+                                            </div>
+                                        </div>
+                                        <li class="td td-item">
+                                            <div class="item-pic">
+                                                <a href="#" class="J_MakePoint">
+                                                    <img src="/resource/2020/09/0-item_pic.jpg_220x220.jpg"
+                                                         class="itempic">
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="td td-comment">
+                                            <div class="item-title">
+                                                <div class="item-opinion">好评</div>
+                                                <div class="item-name">
+                                                    <a href="#">
+                                                        <p class="item-basic-info">美康粉黛醉美唇膏 持久保湿滋润防水不掉色</p>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="item-comment">
+                                                宝贝非常漂亮，超级喜欢！！！
+                                                口红颜色很正呐，还有第两支半价，买三支免单一支的活动，下次还要来买。就是物流太慢了，还要我自己去取快递，店家不考虑换个物流么？
+                                                <div class="filePic"><img
+                                                        src="/resource/2020/09/0-item_pic.jpg_220x220.jpg" alt="">
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <aside th:replace="~{commons :: aside}"></aside>
+</div>
+<script th:src="@{/js/jquery-1.10.2.min.js}"></script>
+<script th:src="@{/js/schoolshop/bootstrap.min.js}"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+
+<script src="/js/commons/getTime.js"></script>
+<!--用户页面必要js-->
+<script src="/js/amazeui.min.js"></script>
+<script src="/js/person/main.js"></script>
+<script src="/js/person/comment.js"></script>
+</body>
+
+</html>

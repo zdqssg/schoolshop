@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml" lang="zn_CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="M_Adnan">
+    <title>商家注册</title>
+    <!--网页图标-->
+    <link rel="shortcut icon" th:href="@{/img/schoolshop/shcool.png}">
+    <!-- 幻灯片效果插件SLIDER REVOLUTION 4.x CSS SETTINGS -->
+    <link rel="stylesheet" th:href="@{/rs-plugin/css/settings.css}" media="screen"/>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" th:href="@{/bootstrap3/css/bootstrap.css}">
+    <!-- 定制的 CSS -->
+    <link rel="stylesheet" th:href="@{/bootstrap3/font-awesome/css/font-awesome.min.css}">
+    <link th:href="@{/css/schoolshop/ionicons.min.css}" rel="stylesheet">
+    <link th:href="@{/css/schoolshop/main.css}" rel="stylesheet">
+    <link th:href="@{/css/schoolshop/style.css}" rel="stylesheet">
+    <link th:href="@{/css/schoolshop/responsive.css}" rel="stylesheet">
+    <!-- JavaScripts -->
+    <script th:src="@{/js/schoolshop/modernizr.js}"></script>
+    <!-- Online Fonts -->
+    <link th:href='@{/css/googleapis/familyMontserrat.css}' rel='stylesheet' type='text/css'>
+    <link th:href='@{/css/googleapis/familyPlayfaiDisplay.css}' rel='stylesheet' type='text/css'>
+
+    <!--IE8以下的浏览器支持方案-->
+    <!--[if lt IE 9]>
+    <script th:src="@{/js/html5shiv.js}"></script>
+    <script th:src="@{/js/respond.min.js}"></script>
+    <![endif]-->
+</head>
+<body>
+
+
+<!-- 加载动画 -->
+<div th:replace="~{commons :: loader}"></div>
+
+<!-- 容器 -->
+<div id="wrap">
+    <!-- 导航 -->
+    <header>
+        <div class="sticky">
+            <div class="container">
+                <!-- schoolshop-logo -->
+                <div th:replace="~{commons :: schoolshop-logo}"></div>
+                <nav class="navbar ownmenu">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#nav-open-btn" aria-expanded="false">
+                            <span class="sr-only">切换导航</span>
+                            <span class="icon-bar"><i class="fa fa-navicon"></i></span></button>
+                    </div>
+                    <!-- schoolshop-nav-left -->
+                    <div th:replace="~{commons :: schoolshop-nav-left}"></div>
+                    <!-- nav-right -->
+                    <div th:replace="~{commons :: nav-right}"></div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <div id="content">
+
+        <!--======= PAGES INNER =========-->
+        <section class="chart-page  padding-bottom-100">
+            <div class="container">
+
+                <!-- Payments Steps -->
+                <div class="shopping-cart">
+
+                    <!-- SHOPPING INFORMATION -->
+                    <div class="cart-ship-info register">
+                        <div class="row">
+                            <!-- ESTIMATE SHIPPING & TAX -->
+                            <div class="col-sm-12">
+                                <h6>免费注册</h6>
+                                <form id="merchant-reg-form" v-on:submit.prevent="register()" method="post">
+                                    <div class="row">
+                                        <div class="col-md-12"><h3>商家信息</h3>
+                                            <ul>
+                                                <!-- Name -->
+                                                <li class="col-md-12">
+                                                    <div class="form-group has-success has-feedback">
+                                                        <label class="control-label" for="nickname">*用户名(必填)
+                                                            <input type="text" class="form-control" required="required"
+                                                                   aria-describedby="inputSuccess2Status"
+                                                                   pattern="^[\u0391-\uFFE5\w]+$"
+                                                                   minlength="3" maxlength="10"
+                                                                   id="nickname" name="nickname"
+                                                                   placeholder="用户名只允许汉字、英文字母、数字及下划线">
+                                                        </label>
+                                                    </div>
+                                                </li>
+
+                                                <!-- PHONE -->
+                                                <li class="col-md-12">
+                                                    <div class="form-group has-success has-feedback">
+                                                        <label class="control-label" for="phone">*手机号(必填)
+                                                            <input type="text" class="form-control" required
+                                                                   aria-describedby="inputSuccess2Status"
+                                                                   pattern="^1[34578]\d{9}$" id="phone" name="phone"
+                                                                   placeholder="手机号">
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                                <!-- 密码 -->
+                                                <li class="col-md-12">
+                                                    <div class="form-group has-success has-feedback">
+                                                        <label class="control-label" for="password">*密码(必填)
+                                                            <input type="password" class="form-control" required
+                                                                   aria-describedby="inputSuccess2Status"
+                                                                   id="password" name="password"
+                                                                   pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$"
+                                                                   placeholder="密码至少包含字母和数字(6-16)">
+                                                        </label>
+                                                    </div>
+                                                </li>
+
+                                                <!-- 确认密码 -->
+                                                <li class="col-md-12">
+                                                    <div class="form-group has-success has-feedback">
+                                                        <label class="control-label" for="rePassword">*确认密码(必填)
+                                                            <input type="password" class="form-control" required
+                                                                   aria-describedby="inputSuccess2Status"
+                                                                   id="rePassword" name="rePassword"
+                                                                   placeholder="请确保密码一致">
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                                <!-- 店铺名 -->
+                                                <li class="col-md-12">
+                                                    <div class="form-group has-success has-feedback">
+                                                        <label class="control-label"
+                                                               for="storeName">*店铺名(必填)
+                                                            <input type="text" class="form-control" required
+                                                                   aria-describedby="inputSuccess2Status"
+                                                                   id="storeName" name="storeName"
+                                                                   pattern="^[\u0391-\uFFE5\w]+$"
+                                                                   minlength="3" maxlength="10"
+                                                                   placeholder="请输入注册店铺名"></label>
+                                                    </div>
+                                                </li>
+                                                <li class="col-md-12">
+                                                    <div class="form-group has-success has-feedback">
+                                                        <label class="control-label"
+                                                               for="category1Id">*店铺性质(必选)
+                                                            <select class="form-control"
+                                                                    name="category1Id" id="category1Id"
+                                                                    aria-describedby="inputSuccess2Status"
+                                                                    required="required"
+                                                                    v-model="selectedCategory1"
+                                                                    @change="getCategory2()">
+                                                                <option v-for="c in category1" :value="c.id">
+                                                                    {{c.name}}
+                                                                </option>
+                                                            </select>
+                                                        </label>
+                                                        <label class="control-label"
+                                                               for="category2Id">*具体分类(必选)
+                                                            <select class="form-control"
+                                                                    name="category2Id" id="category2Id"
+                                                                    aria-describedby="inputSuccess2Status"
+                                                                    required="required" >
+                                                                <option v-for="c in category2" :value="c.id">
+                                                                    {{c.name}}
+                                                                </option>
+                                                            </select>
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-12" style="text-align: center">
+                                            <button type="submit" class="btn">注册</button>
+                                        </div>
+                                        <div class="col-md-12" style="margin-top: 20px;text-align: center">
+                                            <button onclick="gotoMerchantLogin()" class="btn">
+                                                已有账号？去登录
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于我们 -->
+        <section th:replace="~{commons :: aboutUs}"></section>
+
+    </div>
+
+
+    <!--======= 底部 =========-->
+    <footer th:replace="~{commons :: footer}"></footer>
+
+</div>
+<!--通知-->
+<div id="inform"></div>
+<script th:src="@{/js/jquery-1.10.2.min.js}"></script>
+<script th:src="@{/js/schoolshop/bootstrap.min.js}"></script>
+<script th:src="@{/js/schoolshop/own-menu.js}"></script>
+<script th:src="@{/js/schoolshop/jquery.lighter.js}"></script>
+<script th:src="@{/js/schoolshop/owl.carousel.min.js}"></script>
+<!-- 轮播图效果插件SLIDER REVOLUTION 4.x SCRIPTS  -->
+<script th:src="@{/rs-plugin/js/jquery.tp.t.min.js}"></script>
+<script th:src="@{/rs-plugin/js/jquery.tp.min.js}"></script>
+<script th:src="@{/js/schoolshop/main.js}"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+<!--自定义js-->
+<!--头部-->
+<script src="/js/schoolshop/homeHeader.js"></script>
+<script src="/js/schoolshop/userHeader.js"></script>
+
+
+<script src="/js/merchant/reg.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zn_CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="M_Adnan">
+    <title>搜索商品</title>
+
+    <!--网页图标-->
+    <link rel="shortcut icon" th:href="@{/img/schoolshop/shcool.png}">
+    <!-- 幻灯片效果插件SLIDER REVOLUTION 4.x CSS SETTINGS -->
+    <link rel="stylesheet" th:href="@{/rs-plugin/css/settings.css}" media="screen"/>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" th:href="@{/bootstrap3/css/bootstrap.css}">
+    <!-- 定制的 CSS -->
+    <link rel="stylesheet" th:href="@{/bootstrap3/font-awesome/css/font-awesome.min.css}">
+    <link th:href="@{/css/schoolshop/ionicons.min.css}" rel="stylesheet">
+    <link th:href="@{/css/schoolshop/main.css}" rel="stylesheet">
+    <link th:href="@{/css/schoolshop/style.css}" rel="stylesheet">
+    <link th:href="@{/css/schoolshop/responsive.css}" rel="stylesheet">
+    <!-- JavaScripts -->
+    <script th:src="@{/js/schoolshop/modernizr.js}"></script>
+    <!-- Online Fonts -->
+    <link th:href='@{/css/googleapis/familyMontserrat.css}' rel='stylesheet' type='text/css'>
+    <link th:href='@{/css/googleapis/familyPlayfaiDisplay.css}' rel='stylesheet' type='text/css'>
+
+    <!--IE8以下的浏览器支持方案-->
+    <!--[if lt IE 9]>
+    <script th:src="@{/js/html5shiv.js}"></script>
+    <script th:src="@{/js/respond.min.js}"></script>
+    <![endif]-->
+    <!--    价格选择-->
+    <link th:href="@{/css/schoolshop/priceChoose.css}" rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+<!-- 加载动画 -->
+<div th:replace="~{commons :: loader}"></div>
+<!-- 容器 -->
+<div id="wrap">
+    <!-- 导航 -->
+    <header>
+        <div class="sticky">
+            <div class="container">
+                <!-- schoolshop-logo -->
+                <div th:replace="~{commons :: schoolshop-logo}"></div>
+                <nav class="navbar ownmenu">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#nav-open-btn" aria-expanded="false">
+                            <span class="sr-only">切换导航</span>
+                            <span class="icon-bar"><i class="fa fa-navicon"></i></span></button>
+                    </div>
+                    <!-- schoolshop-nav-left -->
+                    <div th:replace="~{commons :: schoolshop-nav-left}"></div>
+                    <!-- nav-right -->
+                    <div th:replace="~{commons :: nav-right}"></div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- 内容 -->
+    <div id="content">
+
+        <!-- 商品们 -->
+        <section class="shop-page padding-top-100 padding-bottom-100">
+            <div class="container">
+                <div class="row" id="resultRoomApp" >
+                    <!-- 内容 -->
+                    <div class="col-sm-8 col-md-9">
+                        <div class="item-display"  v-show="room.total!==0">
+                            <div class="row">
+                                <!-- 选择 -->
+                                <div class="col-xs-12 col-sm-7">
+                                    <!-- 排序方式 -->
+                                    <select class="selectpicker"
+                                            v-model="filter.orderBy"
+                                            @change="load()">
+                                        <option value="0">按热度</option>
+                                        <option value="1">按销量</option>
+                                        <option value="2">按价格</option>
+                                        <option value="3">按好评</option>
+                                    </select>
+                                    <!-- 筛选条件 -->
+                                    <select class="selectpicker"
+                                            v-model="filter.orderSort"
+                                            @change="load()">
+                                        <option value="1">降序</option>
+                                        <option value="0">升序</option>
+                                    </select>
+                                    <!-- 网格展示 -->
+                                    <a href="#." class="grid-style"><i class="icon-grid"></i></a>
+                                    <!-- 列表展示-->
+                                    <a href="#." class="list-style"><i class="icon-list"></i></a>
+
+                                </div>
+                                <div class="col-xs-12 col-sm-5 text-right pull-left view-text">
+                                    当前第<span v-text="room.pageNum"></span>页,
+                                    共<span v-text="room.pages"></span>页,
+                                    共 <span v-text="room.total"></span>条数据
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 搜索内容 -->
+                        <div class="papular-block row">
+                            <!-- 项目 -->
+                            <div class="col-xs-12"
+                                 v-if="room.total===0">
+                                <div class="well well-lg text-center">
+                                    搜索不到商品,请换一个关键词搜索
+                                </div>
+                            </div>
+                            <!-- 项目 -->
+                            <div class="col-xs-6 col-sm-4 col-md-3"
+                                 v-else
+                                 v-for="g in room.list"
+                                 @click="clickGood(g.merchantId,g.id)">
+                                <div class="item">
+                                    <!-- 销售标签 -->
+                                    <div class="on-sale" v-if="g.isDiscount">
+                                        <span v-text="g.discount+'%'">1</span>折扣
+                                    </div>
+                                    <!-- 项目 图片 -->
+                                    <div class="item-img">
+                                            <img v-for="item in 2"
+                                                 class="good-img-default-size"
+                                                 :class="'img-'+item"
+                                                 :src="g.goodsImgPath" alt="">
+                                    </div>
+                                    <!-- 项目 名称 -->
+                                    <div class="item-name">
+                                            <small  v-html="g.goodsName" ></small>
+                                            <!-- 价格 -->
+                                            <span class="price"><small>$</small><span
+                                                    v-text="g.goodsPrice"></span></span>
+                                        <p class="view-text" v-text="g.goodsDescribe"></p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 搜索内容 结束-->
+                        <!--分页开始-->
+                        <div class="row"  v-show="room.total!==0">
+                            <span @click="loadPaging(0)"
+                                  class="btn btn-warning ">
+                                首页
+                            </span>
+                            <span @click="loadPaging((room.hasPreviousPage?room.prePage:0))"
+                                  class="btn btn-warning ">
+                                <i class="fa fa-chevron-left"></i>
+                            </span>
+                            <span v-for="(n,index) in room.pages"
+                                  @click="loadPaging(n)"
+                                  class="btn btn-warning "
+                                  :class="{active:index+1==room.pageNum}"
+                                  v-text="n">1
+                            </span>
+                            <span @click="loadPaging((room.hasNextPage?room.nextPage:room.pages))"
+                                  class="btn btn-warning">
+                                <i class="fa fa-chevron-right"></i>
+                            </span>
+                            <span @click="loadPaging(room.pages)"
+                                  class="btn btn-warning">
+                                尾页
+                            </span>
+                        </div>
+                        <!--分页结束-->
+                    </div>
+                    <!-- 购物导向 -->
+                    <div class="col-sm-4 col-md-3">
+                        <div class="shop-sidebar">
+                            <div class="row">
+                                <!-- 类别 -->
+                                <h5 class="shop-tittle margin-bottom-10"
+                                    @mouseenter="changeCategoryState()">商品分类
+                                </h5>
+                                <ul class="shop-cate col-12"
+                                    v-if="categoryHiden">
+                                    <li class="col-sm-6"
+                                        v-for="c in category1List">
+                                        <a :href="'/home/searchCategory/'+c.id">
+                                            <span v-text="c.name"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="row" id="priceChoose">
+                                <!-- 价格过滤器 -->
+                                <h5 class="shop-tittle margin-top-10 margin-bottom-30">按价格过滤 &nbsp; &nbsp;
+                                    <a class="bg-success" @click="loadByPrice()">[全部]</a></h5>
+                                <div id="debt-amount-slider">
+                                    <input type="radio" name="debt-amount" id="1" v-model="priceIndex" value="0"
+                                           required>
+                                    <label for="1" data-debt-amount="<100"></label>
+                                    <input type="radio" name="debt-amount" id="2" v-model="priceIndex" value="1"
+                                           required>
+                                    <label for="2" data-debt-amount="<300"></label>
+                                    <input type="radio" name="debt-amount" id="3" v-model="priceIndex" value="2"
+                                           required>
+                                    <label for="3" data-debt-amount="<1000"></label>
+                                    <input type="radio" name="debt-amount" id="4" v-model="priceIndex" value="3"
+                                           required>
+                                    <label for="4" data-debt-amount="<5000"></label>
+                                    <input type="radio" name="debt-amount" id="5" v-model="priceIndex" value="4"
+                                           required>
+                                    <label for="5" data-debt-amount="5000+"></label>
+                                    <div id="debt-amount-pos"></div>
+                                </div>
+                                <button @click="loadByPrice(0)">确定</button>
+                            </div>
+                            <!-- 推荐商品 -->
+                            <h5 class="shop-tittle margin-top-60 margin-bottom-30">推荐商品</h5>
+                            <div class="side-bnr margin-top-50" v-for="g in recommendGoods" @click="clickGood(g.merchantId,g.id)">
+                                    <img class="img-responsive" :src="g.goodsImgPath" alt="g.goodsName" :title="g.goodsName">
+
+                                <div class="position-center-center">
+                                    <span class="price"><small>$</small><span v-text="g.goodsPrice"></span></span>
+                                </div>
+                                <div><span  class="bnr-text view-text" v-text="g.goodsName"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 猜你喜欢 -->
+        <section class="padding-top-100 padding-bottom-100" id="hotGoodsApp">
+            <div class="container">
+
+                <!--猜你喜欢-->
+                <div class="heading text-center">
+                    <h4>猜你喜欢</h4>
+                </div>
+                <!-- 猜你喜欢 -->
+                <div class="papular-block row">
+                    <!-- 项目 -->
+                    <div class="col-xs-6 col-sm-3" v-for="g in hotGoods" @click="clickGood(g.merchantId,g.id)">
+                        <div class="item">
+                            <!-- 项目 图片 -->
+                            <div class="item-img">
+                                <img v-for="item in 2"
+                                     class="good-img-default-size"
+                                     :class="'img-'+item"
+                                     :src="g.goodsImgPath" alt="">
+                            </div>
+                            <!-- Overlay  -->
+                            <div class="overlay">
+                                <!-- Price -->
+                                <span class="price"><small>$</small><span v-text="g.goodsPrice"></span></span>
+                            </div>
+                            <!-- 项目 名称 -->
+                            <div class="item-name">
+                                <span class="view-text" v-text="g.goodsName" :title="g.goodsName"></span>
+                                <p class="view-text" v-text="g.goodsDescribe"></p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 关于我们 -->
+        <section th:replace="~{commons :: aboutUs}"></section>
+    </div>
+
+    <!--======= 底部 =========-->
+    <footer th:insert="~{commons :: footer}"></footer>
+</div>
+
+
+<script th:src="@{/js/jquery-1.10.2.min.js}"></script>
+<script th:src="@{/js/schoolshop/bootstrap.min.js}"></script>
+<script th:src="@{/js/schoolshop/own-menu.js}"></script>
+<script th:src="@{/js/schoolshop/jquery.lighter.js}"></script>
+<script th:src="@{/js/schoolshop/owl.carousel.min.js}"></script>
+<!-- 轮播图效果插件SLIDER REVOLUTION 4.x SCRIPTS  -->
+<script src="/rs-plugin/js/jquery.tp.t.min.js"></script>
+<script src="/rs-plugin/js/jquery.tp.min.js"></script>
+<script src="/js/schoolshop/main.js"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+<!--自定义js-->
+<!--头部-->
+<script src="/js/schoolshop/homeHeader.js"></script>
+<script src="/js/schoolshop/userHeader.js"></script>
+<!---->
+<script src="/js/schoolshop/shopWord.js"></script>
+</body>
+</html>

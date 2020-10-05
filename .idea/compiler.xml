@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="schoolshop-api-merchant" />
+        <module name="schoolshop-model" />
+        <module name="schoolshop-getway" />
+        <module name="schoolshop-eureka" />
+        <module name="schoolshop-resource" />
+        <module name="schoolshop-generator" />
+        <module name="schoolshop-api-user" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="schoolshop" target="1.8" />
+      <module name="schoolshop-api-merchant" target="1.8" />
+      <module name="schoolshop-api-user" target="1.8" />
+      <module name="schoolshop-eureka" target="1.8" />
+      <module name="schoolshop-generator" target="1.8" />
+      <module name="schoolshop-getway" target="1.8" />
+      <module name="schoolshop-model" target="1.8" />
+      <module name="schoolshop-resource" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="schoolshop" options="-parameters" />
+      <module name="schoolshop-api-merchant" options="-parameters" />
+      <module name="schoolshop-api-user" options="-parameters" />
+      <module name="schoolshop-eureka" options="-parameters" />
+      <module name="schoolshop-generator" options="-parameters" />
+      <module name="schoolshop-getway" options="-parameters" />
+      <module name="schoolshop-model" options="-parameters" />
+      <module name="schoolshop-resource" options="-parameters" />
+    </option>
+  </component>
+</project>

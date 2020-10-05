@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.schoolshop.getway.mapper.GoodsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.tedu.schoolshop.model.Goods">
+        <id column="id" property="id"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="category1_id" property="category1Id"/>
+        <result column="category2_id" property="category2Id"/>
+        <result column="category3_id" property="category3Id"/>
+        <result column="goods_describe" property="goodsDescribe"/>
+        <result column="goods_price" property="goodsPrice"/>
+        <result column="goods_repertory" property="goodsRepertory"/>
+        <result column="goods_img_path" property="goodsImgPath"/>
+        <result column="goods_state" property="goodsState"/>
+        <result column="goods_sale" property="goodsSale"/>
+        <result column="goods_click_count" property="goodsClickCount"/>
+        <result column="goods_like_count" property="goodsLikeCount"/>
+        <result column="goods_pay_count" property="goodsPayCount"/>
+        <result column="goods_add_cart" property="goodsAddCart"/>
+        <result column="is_discount" property="isDiscount"/>
+        <result column="discount" property="discount"/>
+        <result column="rate" property="rate"/>
+        <result column="star_level" property="starLevel"/>
+        <result column="merchant_id" property="merchantId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <resultMap id="GoodDetailResultMap" type="cn.tedu.schoolshop.vo.goods.GoodDetailVo">
+        <id column="id" property="id"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="category1_id" property="category1Id"/>
+        <result column="category2_id" property="category2Id"/>
+        <result column="category3_id" property="category3Id"/>
+        <result column="goods_describe" property="goodsDescribe"/>
+        <result column="goods_price" property="goodsPrice"/>
+        <result column="goods_repertory" property="goodsRepertory"/>
+        <result column="goods_img_path" property="goodsImgPath"/>
+        <result column="goods_state" property="goodsState"/>
+        <result column="goods_sale" property="goodsSale"/>
+        <result column="goods_click_count" property="goodsClickCount"/>
+        <result column="goods_like_count" property="goodsLikeCount"/>
+        <result column="goods_pay_count" property="goodsPayCount"/>
+        <result column="goods_add_cart" property="goodsAddCart"/>
+        <result column="is_discount" property="isDiscount"/>
+        <result column="discount" property="discount"/>
+        <result column="rate" property="rate"/>
+        <result column="star_level" property="starLevel"/>
+        <result column="merchant_id" property="merchantId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <collection property="comment" ofType="cn.tedu.schoolshop.vo.goodsComment.GoodsCommentVo"
+                    javaType="java.util.List">
+            <id column="commentId" property="id"/>
+            <result column="level" property="level"/>
+            <result column="comment" property="comment"/>
+            <result column="approval" property="approval"/>
+            <result column="commentCreateTime" property="createTime"/>
+            <association property="user" javaType="cn.tedu.schoolshop.vo.user.UserCommendVo">
+                <id column="userId" property="id"/>
+                <result column="nickname" property="nickname"/>
+                <result column="head_photo" property="headPhoto"/>
+            </association>
+        </collection>
+    </resultMap>
+    <resultMap id="GoodsShowResultMap" type="cn.tedu.schoolshop.vo.goods.GoodsShowVo">
+        <id column="id" property="id"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="goods_state" property="goodsState"/>
+        <result column="goods_price" property="goodsPrice"/>
+        <result column="goods_describe" property="goodsDescribe"/>
+        <result column="goods_img_path" property="goodsImgPath"/>
+        <result column="is_discount" property="isDiscount"/>
+        <result column="discount" property="discount"/>
+        <result column="rate" property="rate"/>
+        <result column="star_level" property="starLevel"/>
+        <result column="merchant_id" property="merchantId"/>
+    </resultMap>
+    <sql id="GoodsShowBaseSql">
+        id,goods_name,goods_price,goods_describe,goods_img_path,star_level,merchant_id
+    </sql>
+    <sql id="selectGoodToGoodsShowVoSql">
+        SELECT  id,goods_name,goods_price,goods_describe,goods_img_path,star_level,merchant_id
+        FROM goods
+        WHERE goods_repertory>0
+        AND goods_state=1
+    </sql>
+    <!--首页推荐商品-->
+    <select id="selectRecommendGoods" resultMap="GoodsShowResultMap">
+        select g.id,g.goods_name,g.goods_price,g.goods_describe,g.goods_img_path,g.merchant_id
+        FROM goods g
+        LEFT JOIN recommend_goods r
+          ON g.id=r.goods_id
+        WHERE r.state=1
+        AND  g.goods_state=1
+        AND g.goods_repertory>0
+        ORDER BY r.create_time DESC
+    </select>
+    <!--查询所有商品支付最多8个商品-->
+    <select id="selectHotProducts" resultMap="GoodsShowResultMap">
+        <include refid="selectGoodToGoodsShowVoSql"/>
+        ORDER BY goods_pay_count DESC
+        LIMIT 0,8
+    </select>
+    <!--查询商品详情包含商品评论-->
+    <select id="findGoodDetailById" parameterType="java.lang.Integer" resultMap="GoodDetailResultMap">
+    SELECT g.id,
+       g.goods_name,
+       g.category1_id,
+       g.category2_id,
+       g.category3_id,
+       g.goods_describe,
+       g.goods_price,
+       g.goods_repertory,
+       g.goods_img_path,
+       g.goods_state,
+       g.goods_sale,
+       g.goods_click_count,
+       g.goods_like_count,
+       g.goods_pay_count,
+       g.goods_add_cart,
+       g.is_discount,
+       g.discount,
+       g.rate,
+       g.star_level,
+       g.merchant_id,
+       g.create_time,
+       g.update_time,
+       c.id          commentId,
+       c.level,
+       c.comment,
+       c.approval,
+       c.create_time commentCreateTime,
+       u.id          userId,
+       u.nickname,
+       u.head_photo
+        FROM goods g
+         LEFT JOIN
+             goods_comment c
+             ON  g.id = c.goods_id
+         LEFT JOIN
+             user u
+             ON c.user_id = u.id
+         AND
+         ( c.state = 1  OR c.state = 2)
+        WHERE g.id = #{id}
+         AND ( g.goods_state = 0 OR  g.goods_state = 1 OR g.goods_state = 2)
+         ORDER BY c.create_time DESC
+    </select>
+    <!--  查询商家最热的4个商品-->
+    <select id="findMerchantHotGoods" parameterType="java.lang.Integer" resultMap="GoodsShowResultMap">
+        <include refid="selectGoodToGoodsShowVoSql"/>
+        AND merchant_id=#{merchantId}
+        ORDER BY goods_sale DESC
+        LIMIT 0,4
+    </select>
+    <!--  查询商家最新的4个商品-->
+    <select id="findMerchantNewGoods" parameterType="java.lang.Integer" resultMap="GoodsShowResultMap">
+        <include refid="selectGoodToGoodsShowVoSql"/>
+        AND merchant_id=#{merchantId}
+        ORDER BY create_time DESC
+        LIMIT 0,4
+    </select>
+    <!--    用户首页显示最新的商品-->
+    <select id="findNewGood" resultMap="GoodsShowResultMap">
+        <include refid="selectGoodToGoodsShowVoSql"/>
+        ORDER BY create_time DESC
+        LIMIT 0,1
+    </select>
+</mapper>
