@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author Mr.Zhou
  * @version 1.0
- * @function { 描述一下功能吧 }
+ * @function { ElasticSearch的定时任务 （暂不会和mysql数据库关联 将就着用） }
  * @email zdq247209@163.com
  * @date 2020/10/4 17:05
  */
@@ -42,15 +42,15 @@ public class GoodsSchedule {
     public void putData() throws IOException {
 
         QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
-
+        //商品state  0:已下架  1:上架
         queryWrapper.ge("goods_state", 0);
         queryWrapper.le("goods_state", 1);
         List<Goods> goods = goodsMapper.selectList(queryWrapper);
 
-
+        //删除ElasticSearch的索引
         DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest("goods_index");
         client.indices().delete(deleteIndexRequest, RequestOptions.DEFAULT);
-
+        //添加ElasticSearch的索引
         CreateIndexRequest createIndexRequest = new CreateIndexRequest("goods_index");
         client.indices().create(createIndexRequest, RequestOptions.DEFAULT);
 
