@@ -53,7 +53,7 @@ public class UserSavedRequestAwareAuthenticationSuccessHandler extends SimpleUrl
         // Use the DefaultSavedRequest URL !!关键的一句!!
         String targetUrl = savedRequest.getRedirectUrl();
         logger.debug("Redirecting to DefaultSavedRequest Url: " + targetUrl);
-        // 这里有一个很明显的跳转操作，追踪targetUrl怎么来的
+        // 跳转操作
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
 
     }
