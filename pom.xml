@@ -29,11 +29,18 @@
         <pagehelper.version>1.2.13</pagehelper.version>
         <elasticsearch.version>7.6.2</elasticsearch.version>
         <fastjson.version>1.2.73</fastjson.version>
+        <aliyun.java.sdk.core>4.5.3</aliyun.java.sdk.core>
     </properties>
 
     <!-- 管理依赖 -->
     <dependencyManagement>
         <dependencies>
+            <!--支付宝SDK-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>${aliyun.java.sdk.core}</version>
+            </dependency>
             <dependency>
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch</artifactId>

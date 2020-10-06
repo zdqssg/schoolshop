@@ -3,6 +3,7 @@ package cn.tedu.schoolshop.api.user.controller;
 import cn.tedu.schoolshop.exception.file.*;
 import cn.tedu.schoolshop.exception.service.*;
 import cn.tedu.schoolshop.util.R;
+import com.aliyuncs.exceptions.ClientException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({ServiceException.class, FileUploadException.class})
+    @ExceptionHandler({ServiceException.class, FileUploadException.class, ClientException.class})
     public R handleException(Throwable e) {
         if (e instanceof NickNameDuplicateException) {
             return R.failure(R.State.ERR_NICKNAME_DUPLICATE, e);
