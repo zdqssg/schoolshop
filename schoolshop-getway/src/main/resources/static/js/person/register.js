@@ -1,7 +1,7 @@
 let userRegFormApp = new Vue({
     el: '#userRegFormApp',
     data: {
-        register: {
+        registerObject: {
             nickname: null,
             password: null,
             phone: null
@@ -33,10 +33,11 @@ let userRegFormApp = new Vue({
         },
         sendCode() {
             if (!this.codeObject.timeOut) {
-                let phone = this.register.phone;
+                let phone = this.registerObject.phone;
                 const reg = /^1[34578]\d{9}$/;
                 if (!phone || !reg.test(phone)) {
                     this.codeObject.hint = '请输入正确的手机号';
+                    return;
                 }
                 this.codeObject.hint = '';
                 axios.get('/api-user/none/regCode/' + phone)
@@ -52,14 +53,19 @@ let userRegFormApp = new Vue({
                                     this.codeObject.btn = '重新发送'
                                 }
                             }, 1000);
+                        }else {
+                            this.codeObject.btn = r.data.message
                         }
+                    })
+                    .catch(e=>{
+                        console.log(e)
                     })
             } else {
                 this.codeObject.hint = '请' + this.codeObject.timeOut + '秒后再次发送';
             }
         },
         registerUser() {
-            let data = this.register
+            let data = this.registerObject
             axios.post('/api-user/none/reg', data)
                 .then(r => {
                     if (r.data.state === 2000) {

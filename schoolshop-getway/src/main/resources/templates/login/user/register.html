@@ -76,15 +76,15 @@
                     <div class="cart-ship-info register">
                         <div class="row">
                             <!-- ESTIMATE SHIPPING & TAX -->
-                            <div class="col-xs-8 col-xs-offset-2">
+                            <div class="col-xs-12 col-sm-8 col-sm-offset-2">
                                 <h6>免费注册</h6>
                                 <form id="userRegFormApp" @submit.prevent="registerUser()" method="post">
                                     <ul class="row">
                                         <!-- Name -->
-                                        <li class="col-xs-8 col-xs-offset-2">
+                                        <li class="col-xs-12 col-md-8 col-md-offset-2">
                                             <label> *用户名
                                                 <input onblur="checkHaveName()"
-                                                       v-model="register.nickname"
+                                                       v-model="registerObject.nickname"
                                                        class="form-control"
                                                        type="text"
                                                        pattern="^[\u0391-\uFFE5\w]+$"
@@ -94,10 +94,10 @@
 
 
                                         <!-- LAST NAME -->
-                                        <li class="col-xs-8 col-xs-offset-2">
+                                        <li class="col-xs-12 col-md-8 col-md-offset-2">
                                             <label> *密码
                                                 <input onblur="checkPwd()"
-                                                       v-model="register.password"
+                                                       v-model="registerObject.password"
                                                        class="form-control"
                                                        type="password"
                                                        pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$"
@@ -106,7 +106,7 @@
                                         </li>
 
                                         <!-- LAST NAME -->
-                                        <li class="col-xs-8 col-xs-offset-2">
+                                        <li class="col-xs-12 col-md-8 col-md-offset-2">
                                             <label> *确认密码
                                                 <input onblur="checkRePwd()"
                                                        v-model="rePassword"
@@ -116,9 +116,9 @@
                                             </label>
                                         </li>
                                         <!-- PHONE -->
-                                        <li class="col-xs-8 col-xs-offset-2">
+                                        <li class="col-xs-12 col-md-8 col-md-offset-2">
                                             <label> *手机号
-                                                <input v-model="register.phone"
+                                                <input v-model="registerObject.phone"
                                                        onblur="checkPhone()"
                                                        class="form-control"
                                                        type="text"
@@ -127,7 +127,7 @@
                                             </label>
                                         </li>
                                         <!--code -->
-                                        <li class="col-xs-4 col-xs-offset-2">
+                                        <li class="col-xs-7 col-md-4 col-md-offset-2">
                                             <label> *验证码 <strong class="bg-danger" v-text="codeObject.hint"></strong>
                                                 <input v-model="codeObject.code"
                                                        class="form-control"
@@ -137,7 +137,7 @@
                                             </label>
                                         </li>
                                         <!--code -->
-                                        <li class="col-xs-2">
+                                        <li class="col-xs-5 col-md-4">
                                             <label>&nbsp;
                                                 <input @click="sendCode"
                                                         v-model="codeObject.btn"
@@ -146,7 +146,7 @@
                                             </label>
                                         </li>
                                         <!-- PHONE -->
-                                        <li class="col-xs-4 col-xs-offset-4">
+                                        <li class="col-xs-8 col-xs-offset-2 col-md-8 col-md-offset-2">
                                             <label class="text-center">
                                                 <p v-html="regResult.msg"></p>
                                                 <input type="submit" class="btn " value="注册"/>

@@ -29,17 +29,24 @@
         <pagehelper.version>1.2.13</pagehelper.version>
         <elasticsearch.version>7.6.2</elasticsearch.version>
         <fastjson.version>1.2.73</fastjson.version>
-        <aliyun.java.sdk.core>4.5.3</aliyun.java.sdk.core>
+        <aliyun.java.sdk.core.version>4.5.3</aliyun.java.sdk.core.version>
+        <apache.commons.version>3.11</apache.commons.version>
     </properties>
 
     <!-- 管理依赖 -->
     <dependencyManagement>
         <dependencies>
+            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache.commons.version}</version>
+            </dependency>
             <!--支付宝SDK-->
             <dependency>
                 <groupId>com.aliyun</groupId>
                 <artifactId>aliyun-java-sdk-core</artifactId>
-                <version>${aliyun.java.sdk.core}</version>
+                <version>${aliyun.java.sdk.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.elasticsearch</groupId>

@@ -10,5 +10,5 @@ import cn.tedu.schoolshop.util.R;
  * @date 2020/10/6 15:02
  */
 public interface SendSmsService {
-    R sendRegCode(Integer phone);
+    R sendRegCode(String phone);
 }

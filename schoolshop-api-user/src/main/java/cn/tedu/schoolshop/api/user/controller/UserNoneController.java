@@ -6,9 +6,6 @@ import cn.tedu.schoolshop.api.user.service.IUserService;
 import cn.tedu.schoolshop.api.user.service.SendSmsService;
 import cn.tedu.schoolshop.exception.service.IllegalParameterException;
 import cn.tedu.schoolshop.util.R;
-import cn.tedu.schoolshop.util.aliyun.SendSms;
-import com.aliyuncs.CommonResponse;
-import com.aliyuncs.exceptions.ClientException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -56,7 +53,7 @@ public class UserNoneController {
      * 发送注册验证码
      */
     @GetMapping("/regCode/{phone}")
-    public R regCode(@PathVariable("phone") Integer phone) {
+    public R regCode(@PathVariable("phone") String phone) {
         return sendSmsService.sendRegCode(phone);
     }
 }

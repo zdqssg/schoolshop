@@ -3,10 +3,16 @@ package cn.tedu.schoolshop.api.user.service.impl;
 import cn.tedu.schoolshop.api.user.service.SendSmsService;
 import cn.tedu.schoolshop.exception.service.IllegalParameterException;
 import cn.tedu.schoolshop.util.R;
-import cn.tedu.schoolshop.util.aliyun.SendSms;
+import cn.tedu.schoolshop.util.aliyun.SendSmsUtil;
 import com.aliyuncs.CommonResponse;
 import com.aliyuncs.exceptions.ClientException;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Mr.Zhou
@@ -16,20 +22,34 @@ import org.springframework.stereotype.Service;
  * @date 2020/10/6 15:02
  */
 @Service
+@Slf4j
 public class SendSmsServiceImpl implements SendSmsService {
+    @Value("${project.reg.templateCode}")
+    private String templateCode;
+
     @Override
-    public R sendRegCode(Integer phone) {
+    public R sendRegCode(String phone) {
         if (phone == null) {
             return R.failure(R.State.ERR_ILLEGAL_PARAMETER, new IllegalParameterException("手机号错误"));
         }
+
+        //创建随机4位验证码
+        Map<String, Object> map = new HashMap<>();
+        String code =RandomStringUtils.random(4, true, true);
+        map.put("code", code);
+        log.debug("{}:的验证码是:{}", phone, code);
+
         CommonResponse response = null;
         try {
-            response = SendSms.getCommonResponse(String.valueOf(phone));
-
+            response = SendSmsUtil.getCommonResponse(phone, templateCode, map);
         } catch (ClientException e) {
-            return R.failure(R.State.ERR_UNKNOWN, new ClientException("系统异常"));
+            return R.failure(R.State.ERR_UNKNOWN, new ClientException("系统异常,发送验证码失败"));
         }
-        System.out.println(response.getData());
+
+
+        log.debug("response.getData:{}", response.getData());
+        log.debug("发送结果{}", response.getHttpResponse().isSuccess());
+
         if (response.getHttpResponse().isSuccess()) {
             return R.ok();
         } else {

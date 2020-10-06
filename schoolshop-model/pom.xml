@@ -13,6 +13,11 @@
     <name>schoolshop-model</name>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
         <!--json解析工具-->
         <dependency>
             <groupId>com.alibaba</groupId>
