@@ -15,13 +15,21 @@ import java.util.Map;
 /**
  * @author Mr.Zhou
  * @version 1.0
- * @function { 描述一下功能吧 }
+ * @function { aliyun}
  * @email zdq247209@163.com
  * @date 2020/10/6 12:33
  */
 public class SendSmsUtil {
 
 
+    /**
+     * 发送短信验证码
+     * @param phone
+     * @param templateCode
+     * @param map
+     * @return
+     * @throws ClientException
+     */
     public static CommonResponse getCommonResponse(String phone, String templateCode, Map<String, Object> map) throws ClientException {
         DefaultProfile profile =
                 DefaultProfile.getProfile("cn-hangzhou", "LTAI4G8S9YgMsHSChdyhLxAK", "gxjytPYV83ZkOHe1wdTNC6qGDkswbR");
