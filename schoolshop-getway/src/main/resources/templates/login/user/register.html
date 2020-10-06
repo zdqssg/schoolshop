@@ -78,12 +78,12 @@
                             <!-- ESTIMATE SHIPPING & TAX -->
                             <div class="col-xs-12 col-sm-8 col-sm-offset-2">
                                 <h6>免费注册</h6>
-                                <form id="userRegFormApp" @submit.prevent="registerUser()" method="post">
+                                <form id="userRegFormApp" @submit.prevent="registerUser()" >
                                     <ul class="row">
                                         <!-- Name -->
                                         <li class="col-xs-12 col-md-8 col-md-offset-2">
                                             <label> *用户名
-                                                <input @onblur="checkHaveName()"
+                                                <input @blur="checkHaveName()"
                                                        v-model="registerObject.nickname"
                                                        class="form-control"
                                                        type="text"
@@ -96,7 +96,7 @@
                                         <!-- LAST NAME -->
                                         <li class="col-xs-12 col-md-8 col-md-offset-2">
                                             <label> *密码
-                                                <input @onblur="checkPwd()"
+                                                <input @blur="checkPwd()"
                                                        v-model="registerObject.password"
                                                        class="form-control"
                                                        type="password"
@@ -108,7 +108,7 @@
                                         <!-- LAST NAME -->
                                         <li class="col-xs-12 col-md-8 col-md-offset-2">
                                             <label> *确认密码
-                                                <input @onblur="checkRePwd()"
+                                                <input @blur="checkRePwd()"
                                                        v-model="rePassword"
                                                        class="form-control"
                                                        type="password"
@@ -119,7 +119,7 @@
                                         <li class="col-xs-12 col-md-8 col-md-offset-2">
                                             <label> *手机号
                                                 <input v-model="registerObject.phone"
-                                                       @onblur="checkPhone()"
+                                                       @blur="checkPhone()"
                                                        class="form-control"
                                                        type="text"
                                                        pattern="^1[34578]\d{9}$"
@@ -132,7 +132,7 @@
                                                 <input v-model="registerObject.code"
                                                        class="form-control"
                                                        type="text"
-                                                       pattern="^\d{6}$"
+                                                       pattern="^\d{4}$"
                                                        placeholder="验证码" required>
                                             </label>
                                         </li>

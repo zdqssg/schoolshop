@@ -8,12 +8,13 @@ import cn.tedu.schoolshop.exception.service.*;
 import cn.tedu.schoolshop.util.R;
 import com.aliyuncs.exceptions.ClientException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * 全局处理异常的类
  */
 
-
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({
@@ -29,7 +30,8 @@ public class GlobalExceptionHandler {
         }
 
 
-        if (e instanceof FileSizeException) {
+
+        else if (e instanceof FileSizeException) {
             return R.failure(R.State.ERR_FILE_SIZE, e);
         } else if (e instanceof FileEmptyException) {
             return R.failure(R.State.ERR_FILE_EMPTY, e);
@@ -41,15 +43,15 @@ public class GlobalExceptionHandler {
             return R.failure(R.State.ERR_FILE_STATE, e);
         }
 
-        if (e instanceof CodeErrorException){
-            return R.failure(R.State.ERR_CODE_ERR,e);
-        }else if (e instanceof CodeTimeOutException){
-            return R.failure(R.State.ERR_CODE_TIME_OUT,e);
+
+        else if (e instanceof CodeErrorException) {
+            return R.failure(R.State.ERR_CODE_ERR, e);
+        } else if (e instanceof CodeTimeOutException) {
+            return R.failure(R.State.ERR_CODE_TIME_OUT, e);
         }
 
 
-
-        if (e instanceof IllegalParameterException) {
+        else if (e instanceof IllegalParameterException) {
             return R.failure(R.State.ERR_ILLEGAL_PARAMETER, e);
         } else {
             return R.failure(R.State.ERR_UNKNOWN, e);

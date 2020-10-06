@@ -78,7 +78,7 @@ let userRegFormApp = new Vue({
                             }
                         }, 1000);
                     } else {
-                        this.regResult = r.data.message
+                        this.regResult.msg = r.data.message
                     }
                 })
                 .catch(e => {

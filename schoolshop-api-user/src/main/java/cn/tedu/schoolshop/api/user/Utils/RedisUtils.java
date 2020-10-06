@@ -71,23 +71,25 @@ public class RedisUtils {
 
     /**
      * 向Redis中添加Hash
+     *
      * @param key
      * @param hashKey
      * @param value
      */
-    public void setHash(String key, String hashKey, Serializable value) {
-        HashOperations<String, String, Serializable> hash = redisTemplate.opsForHash();
+    public void setHash(String key, String hashKey, Object value) {
+        HashOperations<String, String, Object> hash = redisTemplate.opsForHash();
         hash.put(key, hashKey, value);
     }
 
     /**
      * 向Redis中得到Hash
+     *
      * @param key
      * @param hashKey
      */
-    public Serializable getHash(String key, String hashKey) {
-        HashOperations<String, String, Serializable> hash = redisTemplate.opsForHash();
-       return hash.get(key,hashKey);
+    public Object getHash(String key, String hashKey) {
+        HashOperations<String, String, Object> hash = redisTemplate.opsForHash();
+        return hash.get(key, hashKey);
     }
 
     /**

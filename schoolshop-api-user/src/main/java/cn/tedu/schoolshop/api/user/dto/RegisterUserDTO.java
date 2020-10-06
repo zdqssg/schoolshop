@@ -17,7 +17,7 @@ public class RegisterUserDTO implements Serializable {
     @Pattern(regexp = "^1[34578]\\d{9}$", message = "注册失败！手机号码格式错误！")
     private String phone;
     @Pattern(regexp = "^\\d{4}$",message = "验证码格式错误！请确认是否正确")
-    private Integer code;
+    private String code;
 
     //备用注册属性
     private String username;

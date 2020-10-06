@@ -48,24 +48,19 @@ public class SendSmsServiceImpl implements SendSmsService {
         redisUtils.setHash(phone, "regCode", code);
         //redis存超时时间
         redisUtils.setHash(phone, "regTimeOut", new Date().getTime());
-
-
-        CommonResponse response = null;
         try {
-            response = SendSmsUtil.getCommonResponse(phone, templateCode, map);
+            CommonResponse response = SendSmsUtil.getCommonResponse(phone,templateCode, map);
+            log.debug("response.getData:{}", response.getData());
+            log.debug("发送结果{}", response.getHttpResponse().isSuccess());
+
+            if (response.getHttpResponse().isSuccess()) {
+                return R.ok();
+            } else {
+                return R.failure(R.State.ERR_UNKNOWN, new ClientException("发送验证码失败"));
+            }
         } catch (ClientException e) {
+            log.debug("",e);
             return R.failure(R.State.ERR_UNKNOWN, new ClientException("系统异常,发送验证码失败"));
         }
-
-
-        log.debug("response.getData:{}", response.getData());
-        log.debug("发送结果{}", response.getHttpResponse().isSuccess());
-
-        if (response.getHttpResponse().isSuccess()) {
-            return R.ok();
-        } else {
-            return R.failure(R.State.ERR_UNKNOWN, new ClientException("发送验证码失败"));
-        }
-
     }
 }

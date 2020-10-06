@@ -9,6 +9,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -23,14 +24,14 @@ public class SendSmsUtil {
 
     public static CommonResponse getCommonResponse(String phone, String templateCode, Map<String, Object> map) throws ClientException {
         DefaultProfile profile =
-                DefaultProfile.getProfile("cn-hangzhou", "LTAI4G5S9dPANY2USonRN6k5", "M12htn9eUaFp0o6Xyl8NKvDKlsHu2l");
+                DefaultProfile.getProfile("cn-hangzhou", "LTAI4G8S9YgMsHSChdyhLxAK", "gxjytPYV83ZkOHe1wdTNC6qGDkswbR");
         IAcsClient client = new DefaultAcsClient(profile);
 
         CommonRequest request = new CommonRequest();
-        request.setSysMethod(MethodType.POST);
-        request.setSysDomain("dysmsapi.aliyuncs.com");
-        request.setSysVersion("2017-05-25");
-        request.setSysAction("SendSms");
+        request.setMethod(MethodType.POST);
+        request.setDomain("dysmsapi.aliyuncs.com");
+        request.setVersion("2017-05-25");
+        request.setAction("SendSms");
         request.putQueryParameter("PhoneNumbers", phone);
         request.putQueryParameter("SignName", "邓强的校园平台");
         request.putQueryParameter("TemplateCode", templateCode);

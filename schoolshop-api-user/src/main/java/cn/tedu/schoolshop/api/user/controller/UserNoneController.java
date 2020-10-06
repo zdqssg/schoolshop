@@ -40,7 +40,7 @@ public class UserNoneController {
      * @return
      */
     @PostMapping("/reg")
-    public R reg(@Valid RegisterUserDTO registerUserDTO, BindingResult bindingResult) {
+    public R reg(@RequestBody@Valid RegisterUserDTO registerUserDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String defaultMessage = bindingResult.getFieldError().getDefaultMessage();
             throw new IllegalParameterException(defaultMessage);

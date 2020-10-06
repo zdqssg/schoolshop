@@ -12,6 +12,7 @@ import cn.tedu.schoolshop.exception.service.PhoneDuplicateException;
 import cn.tedu.schoolshop.model.User;
 import cn.tedu.schoolshop.util.PasswordUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ import java.util.Date;
  * @since 2020-09-10
  */
 @Service
+@Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
     @Autowired
@@ -44,16 +46,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public void registerUser(RegisterUserDTO registerUserDTO) {
         String nickname = registerUserDTO.getNickname();
         String phone = registerUserDTO.getPhone();
-        Integer code = registerUserDTO.getCode();
-        Serializable regCode = redisUtils.getHash(phone, "regCode");
-        if (regCode != code) {
-            throw new CodeErrorException("验证码错误");
-        }
-        Serializable regTimeOut = redisUtils.getHash(phone, "regTimeOut");
-        long time = new Date().getTime() - (long) regTimeOut;
-        if (time/1000/60>5){
+        String code = registerUserDTO.getCode();
+
+        long regTimeOut = (long) redisUtils.getHash(phone, "regTimeOut");
+        int time = (int) (new Date().getTime() - regTimeOut)/1000/60;
+        log.debug("时间间隔{}",time);
+        if (time>5){
             throw new CodeTimeOutException("验证码超时,请重新发送");
         }
+
+        String regCode = (String) redisUtils.getHash(phone, "regCode");
+        if (!code.equals(regCode)) {
+            throw new CodeErrorException("验证码错误");
+        }
+
         if (userMapper.selectByNickName(nickname) != null) {
             throw new NickNameDuplicateException("注册失败,该昵称已经被注册!");
         }
