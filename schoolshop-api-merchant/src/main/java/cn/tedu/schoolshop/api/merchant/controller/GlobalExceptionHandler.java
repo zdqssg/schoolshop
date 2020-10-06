@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
+//123
     @ExceptionHandler({ServiceException.class, FileUploadException.class})
     public R handleException(Throwable e) {
         if (e instanceof NickNameDuplicateException) {
