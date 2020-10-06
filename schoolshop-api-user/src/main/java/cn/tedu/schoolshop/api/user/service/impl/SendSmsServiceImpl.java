@@ -1,5 +1,6 @@
 package cn.tedu.schoolshop.api.user.service.impl;
 
+import cn.tedu.schoolshop.api.user.Utils.RedisUtils;
 import cn.tedu.schoolshop.api.user.service.SendSmsService;
 import cn.tedu.schoolshop.exception.service.IllegalParameterException;
 import cn.tedu.schoolshop.util.R;
@@ -8,9 +9,11 @@ import com.aliyuncs.CommonResponse;
 import com.aliyuncs.exceptions.ClientException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +27,8 @@ import java.util.Map;
 @Service
 @Slf4j
 public class SendSmsServiceImpl implements SendSmsService {
+    @Autowired
+    private RedisUtils redisUtils;
     @Value("${project.reg.templateCode}")
     private String templateCode;
 
@@ -35,9 +40,15 @@ public class SendSmsServiceImpl implements SendSmsService {
 
         //创建随机4位验证码
         Map<String, Object> map = new HashMap<>();
-        String code =RandomStringUtils.random(4, true, true);
+        String code = RandomStringUtils.random(4, false, true);
         map.put("code", code);
         log.debug("{}:的验证码是:{}", phone, code);
+
+        //redis存注册验证码
+        redisUtils.setHash(phone, "regCode", code);
+        //redis存超时时间
+        redisUtils.setHash(phone, "regTimeOut", new Date().getTime());
+
 
         CommonResponse response = null;
         try {

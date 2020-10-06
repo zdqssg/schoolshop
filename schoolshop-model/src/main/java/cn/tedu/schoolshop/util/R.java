@@ -155,5 +155,13 @@ public class R<T> implements Serializable {
          * 发布广告时间过短
          */
         Integer ERR_ADVERTISING_BETWEEN_TIME = 54456;
+        /**
+         * 验证码不匹配
+         */
+        Integer ERR_CODE_ERR = 6010;
+        /**
+         * 验证码超时
+         */
+        Integer ERR_CODE_TIME_OUT = 6020;
     }
 }

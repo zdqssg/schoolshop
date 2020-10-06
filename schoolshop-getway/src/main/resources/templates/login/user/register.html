@@ -83,7 +83,7 @@
                                         <!-- Name -->
                                         <li class="col-xs-12 col-md-8 col-md-offset-2">
                                             <label> *用户名
-                                                <input onblur="checkHaveName()"
+                                                <input @onblur="checkHaveName()"
                                                        v-model="registerObject.nickname"
                                                        class="form-control"
                                                        type="text"
@@ -96,7 +96,7 @@
                                         <!-- LAST NAME -->
                                         <li class="col-xs-12 col-md-8 col-md-offset-2">
                                             <label> *密码
-                                                <input onblur="checkPwd()"
+                                                <input @onblur="checkPwd()"
                                                        v-model="registerObject.password"
                                                        class="form-control"
                                                        type="password"
@@ -108,7 +108,7 @@
                                         <!-- LAST NAME -->
                                         <li class="col-xs-12 col-md-8 col-md-offset-2">
                                             <label> *确认密码
-                                                <input onblur="checkRePwd()"
+                                                <input @onblur="checkRePwd()"
                                                        v-model="rePassword"
                                                        class="form-control"
                                                        type="password"
@@ -119,7 +119,7 @@
                                         <li class="col-xs-12 col-md-8 col-md-offset-2">
                                             <label> *手机号
                                                 <input v-model="registerObject.phone"
-                                                       onblur="checkPhone()"
+                                                       @onblur="checkPhone()"
                                                        class="form-control"
                                                        type="text"
                                                        pattern="^1[34578]\d{9}$"
@@ -129,7 +129,7 @@
                                         <!--code -->
                                         <li class="col-xs-7 col-md-4 col-md-offset-2">
                                             <label> *验证码 <strong class="bg-danger" v-text="codeObject.hint"></strong>
-                                                <input v-model="codeObject.code"
+                                                <input v-model="registerObject.code"
                                                        class="form-control"
                                                        type="text"
                                                        pattern="^\d{6}$"

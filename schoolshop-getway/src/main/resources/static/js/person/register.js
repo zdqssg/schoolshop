@@ -4,11 +4,11 @@ let userRegFormApp = new Vue({
         registerObject: {
             nickname: null,
             password: null,
-            phone: null
+            phone: null,
+            code: null
         },
         rePassword: null,
         codeObject: {
-            code: null,
             btn: '发送验证码',
             hint: '',
             timeOut: false
@@ -53,11 +53,11 @@ let userRegFormApp = new Vue({
                                     this.codeObject.btn = '重新发送'
                                 }
                             }, 1000);
-                        }else {
+                        } else {
                             this.codeObject.btn = r.data.message
                         }
                     })
-                    .catch(e=>{
+                    .catch(e => {
                         console.log(e)
                     })
             } else {
@@ -65,15 +65,16 @@ let userRegFormApp = new Vue({
             }
         },
         registerUser() {
+            axios.get('')
             let data = this.registerObject
             axios.post('/api-user/none/reg', data)
                 .then(r => {
                     if (r.data.state === 2000) {
                         this.regResult = '注册成功,即将于<span id="time">' + this.regResult.time + '</span>秒后返回登录';
-                        let regResultInter = setInterval(f => {
+                        setInterval(f => {
                             --this.regResult.time
                             if (this.regResult.time === 0) {
-                                location.href='/person/none/login'
+                                location.href = '/person/none/login'
                             }
                         }, 1000);
                     } else {

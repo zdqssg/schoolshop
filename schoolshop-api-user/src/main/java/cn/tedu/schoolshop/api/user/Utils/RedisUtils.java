@@ -2,6 +2,7 @@ package cn.tedu.schoolshop.api.user.Utils;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -66,6 +67,27 @@ public class RedisUtils {
         ValueOperations<String, Serializable> ops = redisTemplate.opsForValue();
         Serializable value = ops.get(key);
         return value;
+    }
+
+    /**
+     * 向Redis中添加Hash
+     * @param key
+     * @param hashKey
+     * @param value
+     */
+    public void setHash(String key, String hashKey, Serializable value) {
+        HashOperations<String, String, Serializable> hash = redisTemplate.opsForHash();
+        hash.put(key, hashKey, value);
+    }
+
+    /**
+     * 向Redis中得到Hash
+     * @param key
+     * @param hashKey
+     */
+    public Serializable getHash(String key, String hashKey) {
+        HashOperations<String, String, Serializable> hash = redisTemplate.opsForHash();
+       return hash.get(key,hashKey);
     }
 
     /**
